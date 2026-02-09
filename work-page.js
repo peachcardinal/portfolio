@@ -27,11 +27,14 @@ const createMediaEl = (src, type, alt) => {
 };
 
 const initWorkPage = () => {
-    const params = new URLSearchParams(window.location.search);
-    const slug = params.get('slug');
-
+    const pathMatch = window.location.pathname.match(/\/work\/([^/]+)/);
+    let slug = pathMatch ? pathMatch[1] : null;
     if (!slug) {
-        window.location.href = 'works.html';
+        slug = new URLSearchParams(window.location.search).get('slug');
+    }
+    const worksUrl = pathMatch ? '../works.html' : 'works.html';
+    if (!slug) {
+        window.location.href = worksUrl;
         return;
     }
 
@@ -40,7 +43,7 @@ const initWorkPage = () => {
     const work = workIndex >= 0 ? works[workIndex] : null;
 
     if (!work) {
-        window.location.href = 'works.html';
+        window.location.href = worksUrl;
         return;
     }
 
@@ -54,7 +57,8 @@ const initWorkPage = () => {
         }
     }
 
-    const folder = work.folder || `assets/works/${slug}`;
+    const assetBase = pathMatch ? '../' : '';
+    const folder = assetBase + (work.folder || `assets/works/${slug}`);
     const workFiles = (window.WORK_FILES && window.WORK_FILES[slug]) || [];
     const layout = work.layout || null;
 
@@ -241,10 +245,10 @@ const initWorkPage = () => {
         const next = workIndex < works.length - 1 ? works[workIndex + 1] : (works.length > 1 ? works[0] : null);
 
         const prevLink = prev && prev.slug
-            ? `work.html?slug=${prev.slug}`
-            : 'works.html';
+            ? (pathMatch ? prev.slug : `work/${prev.slug}`)
+            : worksUrl;
         const nextLink = next
-            ? (next.slug ? `work.html?slug=${next.slug}` : 'works.html')
+            ? (next.slug ? (pathMatch ? next.slug : `work/${next.slug}`) : worksUrl)
             : null;
 
         const prevBack = prev ? prev.title : 'Works';

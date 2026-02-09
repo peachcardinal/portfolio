@@ -31,7 +31,7 @@ window.addEventListener('beforeunload', saveScrollPosition);
 const initNav = () => {
     const path = window.location.pathname || '';
     let page = document.body.dataset.page;
-    if (path.includes('work.html') || path.includes('slug=')) {
+    if (path.match(/\/work\/[^/]+/)) {
         page = 'work';
     } else if (path.endsWith('/works') || path.includes('/works') || path.endsWith('works.html')) {
         page = 'works';
