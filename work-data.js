@@ -1,0 +1,242 @@
+window.WORK_FILES = {
+    "nikatin": [
+        "00-main.mp4",
+        "01-misha.webp",
+        "02-misha.webp",
+        "03-misha.webp"
+    ],
+    "seanation": [
+        "00-bg video.webp",
+        "01-seanation-03.webp",
+        "02-seanation-04.webp",
+        "03-seanation-07.webp"
+    ],
+    "idol": [
+        "00-idol-03.webp",
+        "01-\u043b\u043e\u0433\u043e.webp",
+        "02-idol-01.webp",
+        "03-idol-02.webp",
+        "04-idol-04.webp",
+        "05-idol-05.webp",
+        "06-idol-06.webp"
+    ],
+    "theselfrule": [
+        "00-main.mp4"
+    ],
+    "typetoday": [
+        "00-video.mp4",
+        "01-type today big city.mp4",
+        "02-type today cera.mp4",
+        "03-type today druk.mp4",
+        "04-type today graphic.mp4",
+        "05-type today pilar.mp4",
+        "06-type today spectral.mp4",
+        "07-type today thema.mp4"
+    ],
+    "sulliwan": [
+        "00-sulliwan-main.mp4",
+        "01-sulliwan-01.webp",
+        "02-sulliwan-02.webp",
+        "03-sulliwan-03.webp",
+        "04-sulliwan-04.webp",
+        "05-sulliwan-05.webp",
+        "06-sulliwan-06.webp"
+    ],
+    "xmercs": [
+        "00-bg.mp4",
+        "01-xmercs-01.webp",
+        "02-xmercs-02.webp",
+        "03-xmercs-03.webp",
+        "04-xmercs-04.webp",
+        "05-xmercs-05.webp"
+    ],
+    "powersound": [
+        "00-mockup 2.mp4",
+        "01-mockup 3.mp4",
+        "02-454571.webp",
+        "03-454572.webp",
+        "04-454574.webp",
+        "05-454575.webp",
+        "06-mockup.mp4",
+        "07-454576.webp",
+        "08-Comp 1 2.mp4",
+        "09-Comp 1 3.mp4",
+        "10-Comp 1.mp4"
+    ],
+    "nhi": [
+        "00-logo.mp4",
+        "01-phone shot.webp",
+        "02-logo-process.mp4",
+        "03-tote.webp",
+        "04-colors.webp",
+        "05-logo-combinations.mp4",
+        "06-cap.webp",
+        "07-fonts.mp4",
+        "08-nhi_banner.webp",
+        "09-tshirt.webp",
+        "10-web-main.mp4",
+        "11-nhi-release-web.webp",
+        "12-nhi-nft-web.webp",
+        "13-nhi-grid-web.webp",
+        "14-web-release.mp4",
+        "15-nhi-404-web.webp",
+        "16-web-nft.mp4",
+        "17-nhi-shots-mob.webp"
+    ],
+    "autism": [
+        "00-Untitled-1.mp4",
+        "01-autism-03.png",
+        "02-autism-04.png",
+        "03-autism-05.png",
+        "04-autism-06.png",
+        "05-autism-07.png",
+        "06-autism-08.png",
+        "07-autism-09.png"
+    ],
+    "septum": [
+        "00-circle-heads-horiz.mp4",
+        "01.webp",
+        "02.webp",
+        "03.webp",
+        "04.webp",
+        "05.webp",
+        "06.webp",
+        "07.webp",
+        "08.webp",
+        "09.webp",
+        "10.webp",
+        "11.webp",
+        "12.webp"
+    ],
+    "48hours": [
+        "00-48h-main.mp4",
+        "01-48h06.webp",
+        "02-48h01.webp",
+        "03-48h09.webp",
+        "04-48h02.webp",
+        "05-48h03.webp",
+        "06-48h-program.mp4",
+        "07-48h04.webp",
+        "08-48h05.webp",
+        "09-48h07.webp",
+        "10-48h08.webp"
+    ],
+    "coopywriters": [
+        "00-coop-01.webp",
+        "01-coop-02.webp",
+        "02-coop-03.webp",
+        "03-coop-04.webp",
+        "04-coop-05.webp",
+        "05-coop-06.webp"
+    ],
+    "blablatalk": [
+        "00-intro.mp4",
+        "01-mission.mp4",
+        "03-bbt.webp",
+        "04-brand color.mp4",
+        "05-icon app.webp",
+        "06-brand bento.mp4",
+        "07-app arch.webp",
+        "08-signin (1).webp",
+        "09-chat shot.webp",
+        "10-video listeners.mp4",
+        "11-tribes.webp",
+        "12-tribes flow.webp",
+        "13-ui kit.webp",
+        "14-be__avatars.mp4",
+        "15-hand-shot.webp",
+        "16-rating.webp",
+        "17-tribe.webp",
+        "18-video profile.mp4",
+        "19-shots.webp"
+    ],
+    "viju": [
+        "00-viju_brandbook_v1 (1080p).mp4",
+        "01-viju_01.webp",
+        "02-viju_02.webp",
+        "03-viju_03.webp",
+        "04-viju_04.webp",
+        "05-viju_05.webp",
+        "06-viju_06.webp",
+        "07-viju_07.webp"
+    ],
+    "bff": [
+        "00-bff-main.mp4",
+        "01-bff-09.webp",
+        "02-bff-06.webp",
+        "03-bff-08.webp",
+        "04-bff-03.webp",
+        "05-bff-timetable.mp4",
+        "06-bff-01.webp",
+        "07-bff-02.webp",
+        "08-bff-04.webp",
+        "09-bff-07.webp",
+        "10-bff-05.webp"
+    ],
+    "shalash": [
+        "00-bg video.mp4",
+        "01-shalash-01.webp",
+        "02-shalash-02.webp",
+        "03-shalash-03.webp",
+        "04-shalash-04.webp",
+        "05-shalash-05.webp",
+        "06-shalash-06.webp"
+    ],
+    "madeforyou": [
+        "00-y.music-video.mp4",
+        "01-y.music-01.webp",
+        "02-y.music-02.webp",
+        "03-y.music-03.webp",
+        "04-y.music-04.webp",
+        "05-y.music-05.webp",
+        "06-y.music-06.webp"
+    ],
+    "waves2years": [
+        "00-upload-162c5593-f132-4569-b063-5e7dea237554.webp",
+        "01-upload-6981b7cb-2e17-4e2c-b77c-e1af6efc9e39.webp",
+        "02-upload-75794def-2a51-430b-9ecb-8b19ec5e6a6a.webp",
+        "03-upload-708802f9-a9e8-418e-b2e0-79abd8199e33.webp",
+        "04-upload-6573585e-9e24-4715-8571-3f833bc7726d.webp",
+        "05-upload-c8ee4220-4f07-4ffe-8877-6a30aa2f32ce.webp"
+    ],
+    "overlay": [
+        "00-screencast.mp4",
+        "01-overlay-01.webp",
+        "02-overlay-0101.webp",
+        "03-overlay-0103.webp",
+        "04-overlay-0104.webp",
+        "05-phone.png",
+        "06-mob-list.mp4",
+        "07-web-video-3.mp4",
+        "08-overlay-0105.webp",
+        "09-web-video-2.mp4",
+        "10-overlay-0102.webp"
+    ],
+    "five": [
+        "00-five-01.png",
+        "01-portfolio__five_artists_v1 (1080p).mp4",
+        "02-portfolio__five_cars_v1 (1080p).mp4",
+        "03-portfolio__five_cities_v1 (1080p).mp4",
+        "04-portfolio__five_experiments_v1 (1080p).mp4",
+        "05-portfolio__five_movies_v1 (1080p).mp4",
+        "06-portfolio__five_penicilin_v1 (1080p).mp4",
+        "07-five-02.png",
+        "08-five-03.png",
+        "09-five-04.png",
+        "10-five-05.png",
+        "11-five-07.png",
+        "12-five-09.png",
+        "13-five-10.png"
+    ],
+    "catery": [
+        "00-main.mp4",
+        "01-catery-01.webp",
+        "02-catery-02.webp",
+        "03-catery-03.webp",
+        "04-catery-04.webp",
+        "05-catery-05.webp",
+        "06-catery-06.webp",
+        "07-catery-07.webp",
+        "08-catery-08.webp"
+    ]
+};

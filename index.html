@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roman Sazonov — Портфолио</title>
+    <script>
+        (function(){
+            var k='themeOverride';
+            var o=localStorage.getItem(k);
+            var t;
+            if(o==='light'||o==='dark'){t=o;}
+            else{
+                var h=(new Date()).getHours();
+                t=(h>=9&&h<21)?'light':'dark';
+            }
+            document.documentElement.setAttribute('data-theme',t);
+        })();
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="scale-layout" data-page="index">
+    <header class="header">
+        <div class="header__left">
+            <a href="index.html" class="header__name link link-flip" data-text="Roman Sazonov" aria-label="На главную">
+                <span class="link-flip__front">Roman Sazonov</span>
+                <span class="link-flip__back">Roman Sazonov</span>
+                <span class="link-flip__ghost">Roman Sazonov</span>
+            </a>
+            <nav class="header__nav">
+                <a href="works.html" class="link link-flip" data-text="Works">
+                    <span class="link-flip__front">Works</span>
+                    <span class="link-flip__back">Works</span>
+                    <span class="link-flip__ghost">Works</span>
+                </a>
+                <a href="projects.html" class="link link-flip" data-text="Projects">
+                    <span class="link-flip__front">Projects</span>
+                    <span class="link-flip__back">Projects</span>
+                    <span class="link-flip__ghost">Projects</span>
+                </a>
+                <a href="about.html" class="link link-flip" data-text="About">
+                    <span class="link-flip__front">About</span>
+                    <span class="link-flip__back">About</span>
+                    <span class="link-flip__ghost">About</span>
+                </a>
+            </nav>
+        </div>
+        <div class="header__center">
+            <a href="index.html" class="header__logo" aria-label="На главную">
+                <span class="header__logo-media">
+                    <img src="assets/logo.gif" alt="">
+                    <!-- Для гиф или видео: заменить img на <video> или <img src="logo.gif"> -->
+                </span>
+            </a>
+        </div>
+        <div class="header__right">
+            <button type="button" class="theme-toggle" aria-label="Переключить тему" title="Тема">
+                <span class="theme-toggle__icon" aria-hidden="true"></span>
+            </button>
+            <a href="mailto:wekctl@gmail.com" class="link header__mail link-flip" data-email="wekctl@gmail.com" data-text="Mail">
+                <span class="link-flip__front">Mail</span>
+                <span class="link-flip__back">Mail</span>
+                <span class="link-flip__ghost">Mail</span>
+            </a>
+            <a href="https://www.linkedin.com/in/10byrs/" target="_blank" rel="noopener" class="link link-flip" data-text="Linkedin">
+                <span class="link-flip__front">Linkedin</span>
+                <span class="link-flip__back">Linkedin</span>
+                <span class="link-flip__ghost">Linkedin</span>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="carousel" aria-label="Works carousel">
+            <div class="carousel__focus">
+                <div class="carousel__viewport">
+                    <ul class="carousel__track"></ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <h1 class="about__text">E-shaped designer with over 12 YoE in web, product design, branding and design management. Expertise in B2C, B2B, Fintech and Web3 products</h1>
+        </section>
+    </main>
+    <script src="work.js"></script>
+    <script src="nav.js"></script>
+    <script src="theme.js"></script>
+    <script src="animations.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

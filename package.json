@@ -1,0 +1,8 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "scripts": {
+    "build:archive": "node scripts/build-archive.js",
+    "build:work": "node scripts/build-work.js"
+  }
+}
