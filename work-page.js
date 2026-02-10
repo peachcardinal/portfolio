@@ -47,7 +47,16 @@ const initWorkPage = () => {
         return;
     }
 
-    document.title = `Roman Sazonov — ${work.title}`;
+    document.title = `Roman Sazonov, ${work.title}`;
+    const descEl = document.querySelector('meta[name="description"]');
+    if (descEl && work.intro && work.intro.heading) {
+        const text = (work.intro.heading || '').replace(/<[^>]*>/g, '').trim();
+        descEl.setAttribute('content', text.length > 155 ? text.slice(0, 152).trim() + '...' : text);
+    }
+    const canonicalEl = document.querySelector('link[rel="canonical"]');
+    if (canonicalEl) {
+        canonicalEl.setAttribute('href', window.location.origin + window.location.pathname);
+    }
     const titleEl = document.querySelector('.work__title');
     if (titleEl) {
         titleEl.textContent = work.title;

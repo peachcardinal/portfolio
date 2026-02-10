@@ -375,7 +375,7 @@ window.WORKS = [
         projectLink: 'https://bb.viasat.ru/viju/',
         year: '2022',
         type: 'Web, R/m',
-        media: { type: 'image', src: 'assets/works/index-viju.png', alt: 'Viju Brandbook' },
+        media: { type: 'video', src: 'assets/works/index-viju.mp4', alt: 'Viju Brandbook' },
         intro: {
             heading: 'Digital version of the brandbook for Viju. Viju is a new format for viewing and selecting movies and TV series online. Developed by the Moscow Mule Studio.',
             text: '<p>The project shows the main constants of using branding for various tasks. It is made in a minimalistic style using interactive for a visual example.</p>',
@@ -462,7 +462,7 @@ window.WORKS = [
         link: 'work/seanation',
         year: '2021',
         type: 'Web, R/m',
-        media: { type: 'image', src: 'assets/works/index-seanation.png', alt: 'Seanation' },
+        media: { type: 'video', src: 'assets/works/index-seanation.mp4', alt: 'Seanation' },
         intro: {
             heading: 'Website for the yacht company. Seanation trains and certifies yachtsmen, organizes regattas and races, consults in buying yachts and so on.',
             text: '<p>Punks in yachting — positioning the company in a new corporate style that wanted to support on the site.</p>',
@@ -845,7 +845,7 @@ window.WORKS = [
         link: 'work/shalash',
         year: '2019',
         type: 'Web, R/m',
-        media: { type: 'image', src: 'assets/works/index-shalash.png', alt: 'Shalash' },
+        media: { type: 'video', src: 'assets/works/index-shalash.mp4', alt: 'Shalash' },
         intro: {
             heading: 'Website for Shalash. Shalash professionally works with behavioral difficulties and helps children, parents and teachers cope with any manifestations of aggression and unwillingness to follow the rules.',
             text: '',
@@ -968,7 +968,7 @@ window.WORKS = [
         link: 'work/xmercs',
         year: '2016',
         type: 'Web',
-        media: { type: 'image', src: 'assets/works/index-xmercs.png', alt: 'X-Mercs' },
+        media: { type: 'video', src: 'assets/works/index-xmercs.mp4', alt: 'X-Mercs' },
         intro: {
             heading: 'Website for X-Mercs. X-Mercs is a step-by-step strategy game in which you will lead your own military corporation.',
             text: '',

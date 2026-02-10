@@ -4,6 +4,7 @@
     src: url('fonts/Literata-Light.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -11,6 +12,7 @@
     src: url('fonts/BasisGrotesqueMonoPro-Regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
+    font-display: swap;
 }
 
 /* Базовый размер: 1rem = 12px */
@@ -1618,8 +1620,9 @@ body.scale-layout .footer {
     }
 }
 
-/* Theme toggle button */
+/* Theme toggle button (hidden from visitors, auto theme by time remains) */
 .theme-toggle {
+    display: none;
     background: none;
     border: none;
     padding: 0;
@@ -1627,7 +1630,6 @@ body.scale-layout .footer {
     color: inherit;
     font-family: inherit;
     font-size: inherit;
-    display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 1.5rem;
