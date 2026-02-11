@@ -176,7 +176,7 @@ window.WORKS = [
         projectLinkLabel: 'View live',
         year: '2022',
         type: 'Product',
-        media: { type: 'image', src: 'assets/works/index-bbt.png', alt: 'BlaBlaTalk' },
+        media: { type: 'image', src: 'assets/works/index-bbt.webp', alt: 'BlaBlaTalk' },
         intro: {
             heading: 'Launch of a new chat app. BlaBlaTalk is an app for safely communicating with attentive listeners and experts, as well as other community members.',
             text: '<p>The goal was to make a platform where people can safely share their problems, an eco-friendly environment for discussion and support, as well as socialising with others in shared chats.</p><p>Together with the team developed branding, website and app for the project. We went all the way from scratch to a full-fledged working project: drafting architecture, designing scenarios, prioritising features, formulating image and values, and much more.</p>',
@@ -298,7 +298,7 @@ window.WORKS = [
         projectLink: 'https://theselfrule.org/',
         year: '2022',
         type: 'Web, R/m',
-        media: { type: 'image', src: 'assets/works/index-theselfrule.png', alt: 'The Self Rule' },
+        media: { type: 'image', src: 'assets/works/index-theselfrule.webp', alt: 'The Self Rule' },
         intro: {
             heading: "One-page website for theselfrule.org. The organization's mission is to promote knowledge and create solutions in new and emerging areas based on tokens.",
             text: '<p>Water in the background as a symbol of the endless process of learning and openness of the organization to help everyone to move forward.</p>',
@@ -335,7 +335,7 @@ window.WORKS = [
         link: 'work/nikatin',
         year: '2022',
         type: 'Web, R/m',
-        media: { type: 'image', src: 'assets/works/index-nikatin.png', alt: 'Misha Nikatin' },
+        media: { type: 'image', src: 'assets/works/index-nikatin.webp', alt: 'Misha Nikatin' },
         intro: {
             heading: 'One-page website for Misha Nikatin, a visual artist based in Moscow.',
             text: '',
@@ -635,7 +635,7 @@ window.WORKS = [
         projectLink: 'https://autismjournal.help/',
         year: '2020',
         type: 'Web',
-        media: { type: 'image', src: 'assets/works/index-autism.png', alt: 'Autism is' },
+        media: { type: 'image', src: 'assets/works/index-autism.webp', alt: 'Autism is' },
         intro: {
             heading: 'Website for a popular science magazine for anyone connected to the theme of autism. New project from "Outfund" Foundation, which wants to collect all material about this topic in Russian in one place.',
             text: '<p>The goal was to make a dynamic feed of material, taking into account the peculiarities of the audience and the limited number of photos in materials.</p>',
@@ -719,7 +719,7 @@ window.WORKS = [
         projectLink: 'https://catery.ru/',
         year: '2019',
         type: 'Product',
-        media: { type: 'image', src: 'assets/works/index-catery.png', alt: 'Catery' },
+        media: { type: 'image', src: 'assets/works/index-catery.webp', alt: 'Catery' },
         intro: {
             heading: 'App design for Catery. Catery is an aggregator-app for Russian catering companies that helps order quality catering for private or corporate events.',
             text: '<p>The task was to develop an application based on an existing desktop service. Conduct interviews with customers of the service, identify problems and improve the user experience.</p>',
@@ -764,7 +764,7 @@ window.WORKS = [
         projectLink: 'https://coopywriters.ru/',
         year: '2019',
         type: 'Web, R/m',
-        media: { type: 'image', src: 'assets/works/index-coop.png', alt: 'Coopywriters' },
+        media: { type: 'image', src: 'assets/works/index-coop.webp', alt: 'Coopywriters' },
         intro: {
             heading: 'Website for Coopywriters. Coopywriters is the new copywriting agency which works with meanings, texts and words.',
             text: '',
@@ -804,7 +804,7 @@ window.WORKS = [
         link: 'work/idol',
         year: '2019',
         type: 'Identity',
-        media: { type: 'image', src: 'assets/works/index-idol.png', alt: 'Idol' },
+        media: { type: 'image', src: 'assets/works/index-idol.webp', alt: 'Idol' },
         intro: {
             heading: 'Visual identity for the fitness club based in Moscow. Idol specializes in fitness, crossfit and martial arts classes.',
             text: '<p>Idol — ideal, phantom, subject of worship. Each athlete has his own specific ideal. He comes to the club to reach him. Idol as a club provides many opportunities to achieve it.</p>',
@@ -928,7 +928,7 @@ window.WORKS = [
         link: 'work/waves2years',
         year: '2018',
         type: 'Identity',
-        media: { type: 'image', src: 'assets/works/index-waves.png', alt: 'Waves 2 Years' },
+        media: { type: 'image', src: 'assets/works/index-waves.webp', alt: 'Waves 2 Years' },
         intro: {
             heading: 'Event identity for Waves. The event dedicated to the two-year anniversary of the technology company.',
             text: '',
