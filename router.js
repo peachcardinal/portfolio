@@ -172,13 +172,21 @@
                 initWorkPage();
             }
         } else if (dataPage === 'works') {
-            if (typeof initWorks === 'function') {
+            // #region agent log
+            const hasInitWorks = typeof initWorks === 'function';
+            const worksEl = document.querySelector('.works');
+            const archiveEl = document.querySelector('.works__archive');
+            fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:reinitScripts works',message:'Works reinit',data:{hasInitWorks,worksElExists:!!worksEl,archiveElExists:!!archiveEl},hypothesisId:'C',timestamp:Date.now()})}).catch(()=>{});
+            // #endregion
+            if (hasInitWorks) {
                 // Очищаем существующий контент перед переинициализацией
-                const worksEl = document.querySelector('.works');
                 if (worksEl) worksEl.innerHTML = '';
-                const archiveEl = document.querySelector('.works__archive');
                 if (archiveEl) archiveEl.innerHTML = '';
                 initWorks();
+            } else if (worksEl || archiveEl) {
+                // #region agent log
+                fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:reinitScripts works skip clear',message:'initWorks not defined, not clearing',data:{},hypothesisId:'C',timestamp:Date.now()})}).catch(()=>{});
+                // #endregion
             }
         } else if (dataPage === 'projects') {
             if (typeof initProjectsGrid === 'function') {
@@ -255,6 +263,9 @@
 
     // Основная функция навигации
     const navigate = async (url, pushState = true) => {
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:navigate start',message:'Navigate called',data:{url,isNavigating,pushState},hypothesisId:'A',timestamp:Date.now()})}).catch(()=>{});
+        // #endregion
         if (isNavigating) return;
         
         try {
@@ -262,6 +273,9 @@
             
             // Нормализуем URL
             const normalizedUrl = normalizeUrl(url);
+            // #region agent log
+            fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:navigate after normalize',message:'URL normalized',data:{normalizedUrl,currentPath:window.location.pathname+window.location.search},hypothesisId:'A',timestamp:Date.now()})}).catch(()=>{});
+            // #endregion
             
             // Проверяем, не переходим ли мы на ту же страницу (без учета hash для обычных переходов)
             const currentPath = window.location.pathname + window.location.search;
@@ -284,14 +298,21 @@
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             });
-            
+            // #region agent log
+            fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:navigate after fetch',message:'Fetch response',data:{ok:response.ok,status:response.status,normalizedUrl},hypothesisId:'A',timestamp:Date.now()})}).catch(()=>{});
+            // #endregion
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             
             const html = await response.text();
+            // #region agent log
+            fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:navigate after text',message:'HTML received',data:{htmlLength:html.length,htmlPreview:html.substring(0,200)},hypothesisId:'A',timestamp:Date.now()})}).catch(()=>{});
+            // #endregion
             const content = extractContent(html);
-            
+            // #region agent log
+            fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:extractContent',message:'After extractContent',data:{mainLength:(content.main||'').length,dataPage:content.dataPage,normalizedUrl},hypothesisId:'A',timestamp:Date.now()})}).catch(()=>{});
+            // #endregion
             if (!content.main) {
                 throw new Error('No main content found');
             }
@@ -314,7 +335,9 @@
                 main.innerHTML = content.main;
                 main.classList.remove('fade-out');
                 main.classList.add('fade-in');
-                
+                // #region agent log
+                fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:after set innerHTML',message:'Main after set content',data:{mainChildCount:main.children.length,mainInnerLength:main.innerHTML.length},hypothesisId:'B',timestamp:Date.now()})}).catch(()=>{});
+                // #endregion
                 // Удаляем класс fade-in после завершения анимации
                 setTimeout(() => {
                     main.classList.remove('fade-in');
@@ -341,6 +364,13 @@
         // Перехват кликов по ссылкам
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a');
+            // #region agent log
+            if (link) {
+                const href = link.getAttribute('href');
+                const shouldInterceptResult = shouldIntercept(link);
+                fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:click handler',message:'Link clicked',data:{href,shouldIntercept:shouldInterceptResult,hasTarget:!!link.target},hypothesisId:'A',timestamp:Date.now()})}).catch(()=>{});
+            }
+            // #endregion
             if (!link || !shouldIntercept(link)) return;
             
             e.preventDefault();
