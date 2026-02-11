@@ -330,4 +330,8 @@ const initWorkPage = () => {
 };
 
 window.initWorkPage = initWorkPage;
-document.addEventListener('DOMContentLoaded', initWorkPage);
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.body.getAttribute('data-page') === 'work') {
+        initWorkPage();
+    }
+});

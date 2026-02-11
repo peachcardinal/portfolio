@@ -37,6 +37,8 @@ html {
     --radius-center: 0.833rem;
     --radius-near: 0.667rem;
     --radius-far: 0.5rem;
+    --selection-bg: rgb(224, 255, 11);
+    --selection-text: var(--dark);
 }
 
 /* Theme variables */
@@ -72,6 +74,16 @@ html {
     --border: rgba(175, 177, 182, 1);
     --card: #2a2a2a;
     --accent: rgba(175, 177, 182, 1);
+}
+
+::selection {
+    background: var(--selection-bg);
+    color: var(--selection-text);
+}
+
+::-moz-selection {
+    background: var(--selection-bg);
+    color: var(--selection-text);
 }
 
 /* Базовые стили */
@@ -619,6 +631,11 @@ body[data-page="work"] main {
 .fade-in-up {
     opacity: 0;
     transform: translateY(0.5rem);
+}
+
+/* У ячеек архива до появления во вьюпорте не сдвигаем — только opacity, чтобы не было зазора */
+.works__archive-cell.fade-in-up {
+    transform: none;
 }
 
 .fade-in-up.is-visible {

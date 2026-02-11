@@ -36,6 +36,7 @@
         const doc = parser.parseFromString(html, 'text/html');
         
         const main = doc.querySelector('main');
+        const footer = doc.querySelector('footer.footer') || doc.querySelector('.footer');
         const title = doc.querySelector('title');
         const description = doc.querySelector('meta[name="description"]');
         const canonical = doc.querySelector('link[rel="canonical"]');
@@ -48,6 +49,7 @@
         
         return {
             main: main ? main.innerHTML : '',
+            footer: footer ? footer.outerHTML : '',
             title: title ? title.textContent : '',
             description: description ? description.getAttribute('content') : '',
             canonical: canonical ? canonical.getAttribute('href') : '',
@@ -252,10 +254,13 @@
             }
             
             const main = document.querySelector('main');
-            // Для /work/<slug> запрашиваем work/index.html?slug=..., т.к. статический сервер не отдаёт файл по /work/slug
-            const workMatch = normalizedPath.match(/^\/work\/([^/]+)$/);
+            // База пути для подпапки (например /portfolio при открытии с /portfolio/works)
+            const pathname = (window.location.pathname || '/').replace(/\/$/, '') || '/';
+            const pathBase = pathname === '/' ? '' : pathname.replace(/\/[^/]+$/, '');
+            // Для .../work/<slug> запрашиваем .../work/index.html?slug=..., т.к. статический сервер не отдаёт файл по /work/slug
+            const workMatch = normalizedPath.match(/\/work\/([^/]+)$/);
             const fetchUrl = workMatch
-                ? '/work/index.html?slug=' + encodeURIComponent(workMatch[1])
+                ? (pathBase || '') + '/work/index.html?slug=' + encodeURIComponent(workMatch[1])
                 : normalizedUrl;
             
             const response = await fetch(fetchUrl, {
@@ -288,15 +293,39 @@
             
             if (main) {
                 main.innerHTML = content.main;
-            }
-            
-            // Прокрутка вверх
-            window.scrollTo(0, 0);
-            
-            // Вызов reinit в следующем тике, чтобы DOM успел применить main.innerHTML
-            setTimeout(() => {
+                // About: сразу скрываем элементы анимации, чтобы не было «появилось — исчезло — появилось с фейдом»
+                if (content.dataPage === 'about') {
+                    const aboutAnimated = main.querySelectorAll('.about-page__title, .about-page__intro, .about-page__tag, .about-page__columns, .about-page__career-row--header, .about-page__career-row:not(.about-page__career-row--header), .about-page__cv-btn');
+                    aboutAnimated.forEach((el) => el.classList.add('fade-in-up'));
+                }
+                // Порядок отрисовки: заголовок (уже в документе) → контент → футер.
+                // Сразу переинициализируем контент (карусель, карточки, медиа, список, архив),
+                // чтобы блоки успели отрисоваться до вставки футера.
                 if (content.dataPage != null && content.dataPage !== '') {
                     reinitScripts(content.dataPage);
+                }
+            }
+            
+            window.scrollTo(0, 0);
+            
+            // Футер — после контента, в следующем тике, чтобы не трогать main
+            setTimeout(() => {
+                const existingFooter = document.querySelector('footer.footer') || document.querySelector('.footer');
+                if (content.footer) {
+                    if (existingFooter) {
+                        existingFooter.outerHTML = content.footer;
+                    } else {
+                        const firstScript = document.body.querySelector('script');
+                        if (firstScript) {
+                            firstScript.insertAdjacentHTML('beforebegin', content.footer);
+                        } else {
+                            document.body.insertAdjacentHTML('beforeend', content.footer);
+                        }
+                    }
+                    const footerYear = document.getElementById('footer-year');
+                    if (footerYear) footerYear.textContent = '© ' + new Date().getFullYear();
+                } else if (existingFooter) {
+                    existingFooter.remove();
                 }
             }, 0);
             
@@ -311,6 +340,9 @@
 
     // Инициализация роутера
     const initRouter = () => {
+        if (typeof history !== 'undefined' && 'scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
         // Перехват кликов по ссылкам
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a');

@@ -97,8 +97,9 @@ const initArchive = () => {
 
     const data = shuffleArray(raw);
     const columns = [[], [], []];
-    data.forEach((item, i) => {
-        columns[i % 3].push(item);
+    data.forEach((item) => {
+        const shortest = columns.reduce((best, col, i) => (col.length < best.length ? col : best), columns[0]);
+        shortest.push(item);
     });
 
     columns.forEach((colItems) => {
@@ -129,9 +130,9 @@ const initArchive = () => {
         archiveEl.appendChild(col);
     });
 
-    // Анимируем ячейки архива
+    // Анимация появления карточек архива только при появлении во вьюпорте (IntersectionObserver в animateElements), без fallback
+    const archiveCells = Array.from(archiveEl.querySelectorAll('.works__archive-cell'));
     if (typeof animateElements === 'function') {
-        const archiveCells = Array.from(archiveEl.querySelectorAll('.works__archive-cell'));
         animateElements(archiveCells, 50, true);
     }
 };

@@ -5,10 +5,6 @@ window.ARCHIVE = [
   },
   {
     "type": "image",
-    "src": "assets/archive/01-chat shot.png"
-  },
-  {
-    "type": "image",
     "src": "assets/archive/1.png"
   },
   {

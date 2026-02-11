@@ -43,9 +43,55 @@ const initNav = () => {
     });
 };
 
+const initMailCopy = () => {
+    const mailLink = document.querySelector('.header__mail');
+    if (!mailLink || mailLink.dataset.mailCopyDone) return;
+    mailLink.dataset.mailCopyDone = '1';
+    const email = mailLink.getAttribute('data-email') || (mailLink.getAttribute('href') || '').replace('mailto:', '').trim() || '';
+    if (!email) return;
+    let resetTimer = null;
+    const originalText = 'Mail';
+    const showCopied = () => {
+        const front = mailLink.querySelector('.link-flip__front');
+        const back = mailLink.querySelector('.link-flip__back');
+        const ghost = mailLink.querySelector('.link-flip__ghost');
+        if (front) front.textContent = 'Copied';
+        if (back) back.textContent = 'Copied';
+        if (ghost) ghost.textContent = 'Copied';
+        if (resetTimer) clearTimeout(resetTimer);
+        resetTimer = setTimeout(() => {
+            if (front) front.textContent = originalText;
+            if (back) back.textContent = originalText;
+            if (ghost) ghost.textContent = originalText;
+            resetTimer = null;
+        }, 2000);
+    };
+    mailLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(email).then(showCopied).catch(showCopied);
+        } else {
+            const textarea = document.createElement('textarea');
+            textarea.value = email;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'absolute';
+            textarea.style.left = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+            } catch (err) {}
+            document.body.removeChild(textarea);
+            showCopied();
+        }
+    });
+};
+
 window.initNav = initNav;
+window.initMailCopy = initMailCopy;
 document.addEventListener('DOMContentLoaded', () => {
     initNav();
+    initMailCopy();
     const footerYear = document.getElementById('footer-year');
     if (footerYear) footerYear.textContent = '© ' + new Date().getFullYear();
 });
