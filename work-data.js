@@ -205,7 +205,7 @@ window.WORK_FILES = {
         "02-overlay-0101.webp",
         "03-overlay-0103.webp",
         "04-overlay-0104.webp",
-        "05-phone.png",
+        "05-phone.webp",
         "06-mob-list.mp4",
         "07-web-video-3.mp4",
         "08-overlay-0105.webp",

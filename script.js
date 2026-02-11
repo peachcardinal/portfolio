@@ -41,6 +41,7 @@ const initCarousel = () => {
                 const img = document.createElement('img');
                 img.src = work.media.src;
                 img.alt = work.media.alt || work.title || '';
+                img.loading = 'lazy';
                 media.appendChild(img);
             } else {
                 media.classList.add('card__media--text');

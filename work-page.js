@@ -23,6 +23,7 @@ const createMediaEl = (src, type, alt) => {
     const img = document.createElement('img');
     img.src = src;
     img.alt = alt || '';
+    img.loading = 'lazy';
     return img;
 };
 
@@ -49,14 +50,52 @@ const initWorkPage = () => {
 
     document.title = `Roman Sazonov, ${work.title}`;
     const descEl = document.querySelector('meta[name="description"]');
+    let descriptionText = '';
     if (descEl && work.intro && work.intro.heading) {
         const text = (work.intro.heading || '').replace(/<[^>]*>/g, '').trim();
-        descEl.setAttribute('content', text.length > 155 ? text.slice(0, 152).trim() + '...' : text);
+        descriptionText = text.length > 155 ? text.slice(0, 152).trim() + '...' : text;
+        descEl.setAttribute('content', descriptionText);
     }
     const canonicalEl = document.querySelector('link[rel="canonical"]');
     if (canonicalEl) {
         canonicalEl.setAttribute('href', window.location.origin + window.location.pathname);
     }
+    
+    // Обновление OG тегов
+    const ogTitle = `Roman Sazonov, ${work.title}`;
+    let ogTitleEl = document.querySelector('meta[property="og:title"]');
+    if (!ogTitleEl) {
+        ogTitleEl = document.createElement('meta');
+        ogTitleEl.setAttribute('property', 'og:title');
+        document.head.appendChild(ogTitleEl);
+    }
+    ogTitleEl.setAttribute('content', ogTitle);
+    
+    if (descriptionText) {
+        let ogDescEl = document.querySelector('meta[property="og:description"]');
+        if (!ogDescEl) {
+            ogDescEl = document.createElement('meta');
+            ogDescEl.setAttribute('property', 'og:description');
+            document.head.appendChild(ogDescEl);
+        }
+        ogDescEl.setAttribute('content', descriptionText);
+    }
+    
+    let ogImageEl = document.querySelector('meta[property="og:image"]');
+    if (!ogImageEl) {
+        ogImageEl = document.createElement('meta');
+        ogImageEl.setAttribute('property', 'og:image');
+        document.head.appendChild(ogImageEl);
+    }
+    ogImageEl.setAttribute('content', 'https://10byrs.com/assets/OG.webp');
+    
+    let ogTypeEl = document.querySelector('meta[property="og:type"]');
+    if (!ogTypeEl) {
+        ogTypeEl = document.createElement('meta');
+        ogTypeEl.setAttribute('property', 'og:type');
+        document.head.appendChild(ogTypeEl);
+    }
+    ogTypeEl.setAttribute('content', 'website');
     const titleEl = document.querySelector('.work__title');
     if (titleEl) {
         titleEl.textContent = work.title;

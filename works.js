@@ -121,6 +121,7 @@ const initArchive = () => {
                 const img = document.createElement('img');
                 img.src = item.src;
                 img.alt = '';
+                img.loading = 'lazy';
                 cell.appendChild(img);
             }
             col.appendChild(cell);

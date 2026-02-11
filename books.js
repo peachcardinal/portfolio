@@ -47,6 +47,7 @@ const initBooks = () => {
             const img = document.createElement('img');
             img.src = assetsBase + (book.cover || '');
             img.alt = book.title || '';
+            img.loading = 'lazy';
             img.onerror = () => { img.style.display = 'none'; };
             coverCell.appendChild(img);
             row.appendChild(coverCell);

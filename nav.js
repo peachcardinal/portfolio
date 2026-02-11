@@ -7,9 +7,19 @@ const initScrollRestore = () => {
             const { url, scrollY } = JSON.parse(saved);
             sessionStorage.removeItem(SCROLL_RESTORE_KEY);
             if (url === location.href && typeof scrollY === 'number' && scrollY > 0) {
-                setTimeout(() => {
-                    window.scrollTo(0, scrollY);
-                }, 0);
+                // Ждем полной загрузки страницы и динамического контента перед восстановлением
+                const restoreScroll = () => {
+                    // Дополнительная задержка для загрузки динамического контента (архив, карусель и т.д.)
+                    setTimeout(() => {
+                        window.scrollTo(0, scrollY);
+                    }, 300);
+                };
+                
+                if (document.readyState === 'complete') {
+                    restoreScroll();
+                } else {
+                    window.addEventListener('load', restoreScroll);
+                }
             }
         }
     } catch (e) {
@@ -17,16 +27,51 @@ const initScrollRestore = () => {
     }
 };
 
+let scrollSaveTimeout = null;
+
 const saveScrollPosition = () => {
     try {
+        // Пробуем разные способы получить позицию скролла
+        const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
         sessionStorage.setItem(SCROLL_RESTORE_KEY, JSON.stringify({
             url: location.href,
-            scrollY: window.scrollY || window.pageYOffset
+            scrollY: scrollY
         }));
-    } catch (e) {}
+    } catch (e) {
+        // Игнорируем ошибки сохранения
+    }
 };
 
+// Сохраняем позицию скролла при прокрутке (с debounce)
+const handleScroll = () => {
+    if (scrollSaveTimeout) {
+        clearTimeout(scrollSaveTimeout);
+    }
+    scrollSaveTimeout = setTimeout(() => {
+        saveScrollPosition();
+    }, 150);
+};
+
+// Сохраняем позицию при прокрутке (на window и document для надежности)
+window.addEventListener('scroll', handleScroll, { passive: true });
+document.addEventListener('scroll', handleScroll, { passive: true });
+
+// Альтернативный способ: отслеживание через requestAnimationFrame
+let lastScrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+let rafId = null;
+const checkScroll = () => {
+    const currentScrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+    if (Math.abs(currentScrollY - lastScrollY) > 5) {
+        lastScrollY = currentScrollY;
+        handleScroll();
+    }
+    rafId = requestAnimationFrame(checkScroll);
+};
+rafId = requestAnimationFrame(checkScroll);
+
+// Сохраняем позицию при уходе со страницы
 window.addEventListener('beforeunload', saveScrollPosition);
+window.addEventListener('pagehide', saveScrollPosition);
 
 const initNav = () => {
     const path = window.location.pathname || '';

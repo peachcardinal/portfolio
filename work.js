@@ -96,7 +96,7 @@ window.WORKS = [
             { type: 'half', file: '02-overlay-0101.webp' },
             { type: 'half', file: '03-overlay-0103.webp' },
             { type: 'half', file: '04-overlay-0104.webp' },
-            { type: 'full', file: '05-phone.png' },
+            { type: 'full', file: '05-phone.webp' },
             { type: 'two', left: '06-mob-list.mp4', right: '07-web-video-3.mp4' },
             { type: 'two', left: '08-overlay-0105.webp', right: '09-web-video-2.mp4' },
             { type: 'full', file: '10-overlay-0102.webp' }

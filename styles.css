@@ -387,6 +387,16 @@ main {
     width: 100%;
     margin: 0 auto;
     padding: var(--header-offset) var(--page-padding) var(--page-padding);
+    transition: opacity 0.3s ease;
+    opacity: 1;
+}
+
+main.fade-out {
+    opacity: 0;
+}
+
+main.fade-in {
+    opacity: 1;
 }
 
 body[data-page="works"] main,
