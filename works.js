@@ -136,14 +136,16 @@ const initArchive = () => {
     }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+window.initWorks = initWorks;
+const runWorksInit = () => {
     initWorks();
-    
-    // Анимируем статический заголовок
     if (typeof animateElements === 'function') {
         const title = document.querySelector('.works__title');
-        if (title) {
-            animateElements([title], 0);
-        }
+        if (title) animateElements([title], 0);
     }
-});
+};
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runWorksInit);
+} else {
+    runWorksInit();
+}

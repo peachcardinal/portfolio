@@ -329,4 +329,5 @@ const initWorkPage = () => {
     }
 };
 
+window.initWorkPage = initWorkPage;
 document.addEventListener('DOMContentLoaded', initWorkPage);

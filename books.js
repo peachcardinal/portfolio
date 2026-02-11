@@ -78,14 +78,11 @@ const initBooks = () => {
     }
 };
 
+window.initBooks = initBooks;
 document.addEventListener('DOMContentLoaded', () => {
     initBooks();
-    
-    // Анимируем статический заголовок
     if (typeof animateElements === 'function') {
         const title = document.querySelector('.books__title');
-        if (title) {
-            animateElements([title], 0);
-        }
+        if (title) animateElements([title], 0);
     }
 });

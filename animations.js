@@ -94,3 +94,5 @@ const animateElements = (selector, delay = 50, useObserver = true) => {
         });
     }
 };
+
+window.animateElements = animateElements;

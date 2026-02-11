@@ -44,14 +44,16 @@ const initProjectsGrid = () => {
     }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+window.initProjectsGrid = initProjectsGrid;
+const runProjectsInit = () => {
     initProjectsGrid();
-    
-    // Анимируем статический заголовок
     if (typeof animateElements === 'function') {
         const title = document.querySelector('.projects__title');
-        if (title) {
-            animateElements([title], 0);
-        }
+        if (title) animateElements([title], 0);
     }
-});
+};
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runProjectsInit);
+} else {
+    runProjectsInit();
+}

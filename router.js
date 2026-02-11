@@ -161,83 +161,59 @@
 
     // Переинициализация скриптов для новой страницы
     const reinitScripts = (dataPage) => {
-        // Всегда обновляем навигацию
-        if (typeof initNav === 'function') {
-            initNav();
+        if (typeof window.initNav === 'function') {
+            window.initNav();
         }
-        
-        // Переинициализация в зависимости от страницы
         if (dataPage === 'work') {
-            if (typeof initWorkPage === 'function') {
-                initWorkPage();
+            if (typeof window.initWorkPage === 'function') {
+                window.initWorkPage();
             }
         } else if (dataPage === 'works') {
-            // #region agent log
-            const hasInitWorks = typeof initWorks === 'function';
             const worksEl = document.querySelector('.works');
             const archiveEl = document.querySelector('.works__archive');
-            fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:reinitScripts works',message:'Works reinit',data:{hasInitWorks,worksElExists:!!worksEl,archiveElExists:!!archiveEl},hypothesisId:'C',timestamp:Date.now()})}).catch(()=>{});
-            // #endregion
-            if (hasInitWorks) {
-                // Очищаем существующий контент перед переинициализацией
-                if (worksEl) worksEl.innerHTML = '';
-                if (archiveEl) archiveEl.innerHTML = '';
-                initWorks();
-            } else if (worksEl || archiveEl) {
-                // #region agent log
-                fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:reinitScripts works skip clear',message:'initWorks not defined, not clearing',data:{},hypothesisId:'C',timestamp:Date.now()})}).catch(()=>{});
-                // #endregion
+            if (worksEl) worksEl.innerHTML = '';
+            if (archiveEl) archiveEl.innerHTML = '';
+            if (typeof window.initWorks === 'function') {
+                window.initWorks();
             }
         } else if (dataPage === 'projects') {
-            if (typeof initProjectsGrid === 'function') {
-                const gridEl = document.querySelector('.projects__grid');
-                if (gridEl) gridEl.innerHTML = '';
-                initProjectsGrid();
+            const gridEl = document.querySelector('.projects__grid');
+            if (gridEl) gridEl.innerHTML = '';
+            if (typeof window.initProjectsGrid === 'function') {
+                window.initProjectsGrid();
             }
         } else if (dataPage === 'index') {
-            if (typeof initCarousel === 'function') {
-                // Карусель может требовать полной переинициализации
-                initCarousel();
+            if (typeof window.initCarousel === 'function') {
+                window.initCarousel();
             }
         } else if (dataPage === 'books') {
-            if (typeof initBooks === 'function') {
-                const listEl = document.querySelector('.books__list');
-                if (listEl) listEl.innerHTML = '';
-                initBooks();
+            const listEl = document.querySelector('.books__list');
+            if (listEl) listEl.innerHTML = '';
+            if (typeof window.initBooks === 'function') {
+                window.initBooks();
             }
         } else if (dataPage === 'about') {
-            // Для about страницы нужно запустить анимацию элементов
-            if (typeof animateElements === 'function') {
+            if (typeof window.animateElements === 'function') {
                 setTimeout(() => {
                     const elementsToAnimate = [];
-                    
                     const title = document.querySelector('.about-page__title');
                     if (title) elementsToAnimate.push(title);
-                    
                     const intro = document.querySelector('.about-page__intro');
                     if (intro) elementsToAnimate.push(intro);
-                    
                     const tags = Array.from(document.querySelectorAll('.about-page__tag'));
                     elementsToAnimate.push(...tags);
-                    
                     const columnsBlock = document.querySelector('.about-page__columns');
                     if (columnsBlock) elementsToAnimate.push(columnsBlock);
-                    
                     const careerHeader = document.querySelector('.about-page__career-row--header');
                     if (careerHeader) elementsToAnimate.push(careerHeader);
-                    
                     const careerRows = Array.from(document.querySelectorAll('.about-page__career-row:not(.about-page__career-row--header)'));
                     elementsToAnimate.push(...careerRows);
-                    
                     const cvBtn = document.querySelector('.about-page__cv-btn');
                     if (cvBtn) elementsToAnimate.push(cvBtn);
-                    
-                    animateElements(elementsToAnimate, 50, true);
+                    window.animateElements(elementsToAnimate, 50, true);
                 }, FADE_DURATION);
             }
         }
-        
-        // Обновляем активное состояние навигации
         updateActiveNav(dataPage);
     };
 
@@ -261,21 +237,11 @@
         }
     };
 
-    // Основная функция навигации
     const navigate = async (url, pushState = true) => {
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:navigate start',message:'Navigate called',data:{url,isNavigating,pushState},hypothesisId:'A',timestamp:Date.now()})}).catch(()=>{});
-        // #endregion
         if (isNavigating) return;
-        
         try {
             isNavigating = true;
-            
-            // Нормализуем URL
             const normalizedUrl = normalizeUrl(url);
-            // #region agent log
-            fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:navigate after normalize',message:'URL normalized',data:{normalizedUrl,currentPath:window.location.pathname+window.location.search},hypothesisId:'A',timestamp:Date.now()})}).catch(()=>{});
-            // #endregion
             
             // Проверяем, не переходим ли мы на ту же страницу (без учета hash для обычных переходов)
             const currentPath = window.location.pathname + window.location.search;
@@ -285,34 +251,24 @@
                 return;
             }
             
-            // Fade out текущего контента
             const main = document.querySelector('main');
-            if (main) {
-                main.classList.add('fade-out');
-                await new Promise(resolve => setTimeout(resolve, FADE_DURATION));
-            }
+            // Для /work/<slug> запрашиваем work/index.html?slug=..., т.к. статический сервер не отдаёт файл по /work/slug
+            const workMatch = normalizedPath.match(/^\/work\/([^/]+)$/);
+            const fetchUrl = workMatch
+                ? '/work/index.html?slug=' + encodeURIComponent(workMatch[1])
+                : normalizedUrl;
             
-            // Загрузка нового контента
-            const response = await fetch(normalizedUrl, {
+            const response = await fetch(fetchUrl, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             });
-            // #region agent log
-            fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:navigate after fetch',message:'Fetch response',data:{ok:response.ok,status:response.status,normalizedUrl},hypothesisId:'A',timestamp:Date.now()})}).catch(()=>{});
-            // #endregion
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             
             const html = await response.text();
-            // #region agent log
-            fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:navigate after text',message:'HTML received',data:{htmlLength:html.length,htmlPreview:html.substring(0,200)},hypothesisId:'A',timestamp:Date.now()})}).catch(()=>{});
-            // #endregion
             const content = extractContent(html);
-            // #region agent log
-            fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:extractContent',message:'After extractContent',data:{mainLength:(content.main||'').length,dataPage:content.dataPage,normalizedUrl},hypothesisId:'A',timestamp:Date.now()})}).catch(()=>{});
-            // #endregion
             if (!content.main) {
                 throw new Error('No main content found');
             }
@@ -330,25 +286,19 @@
                 document.body.setAttribute('data-page', content.dataPage);
             }
             
-            // Обновление контента
             if (main) {
                 main.innerHTML = content.main;
-                main.classList.remove('fade-out');
-                main.classList.add('fade-in');
-                // #region agent log
-                fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:after set innerHTML',message:'Main after set content',data:{mainChildCount:main.children.length,mainInnerLength:main.innerHTML.length},hypothesisId:'B',timestamp:Date.now()})}).catch(()=>{});
-                // #endregion
-                // Удаляем класс fade-in после завершения анимации
-                setTimeout(() => {
-                    main.classList.remove('fade-in');
-                }, FADE_DURATION);
             }
             
             // Прокрутка вверх
             window.scrollTo(0, 0);
             
-            // Переинициализация скриптов
-            reinitScripts(content.dataPage);
+            // Вызов reinit в следующем тике, чтобы DOM успел применить main.innerHTML
+            setTimeout(() => {
+                if (content.dataPage != null && content.dataPage !== '') {
+                    reinitScripts(content.dataPage);
+                }
+            }, 0);
             
         } catch (error) {
             console.error('Navigation error:', error);
@@ -364,13 +314,6 @@
         // Перехват кликов по ссылкам
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a');
-            // #region agent log
-            if (link) {
-                const href = link.getAttribute('href');
-                const shouldInterceptResult = shouldIntercept(link);
-                fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'router.js:click handler',message:'Link clicked',data:{href,shouldIntercept:shouldInterceptResult,hasTarget:!!link.target},hypothesisId:'A',timestamp:Date.now()})}).catch(()=>{});
-            }
-            // #endregion
             if (!link || !shouldIntercept(link)) return;
             
             e.preventDefault();

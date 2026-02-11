@@ -163,6 +163,7 @@ const initCarousel = () => {
     };
 
     window.addEventListener('wheel', (event) => {
+        if (document.body.getAttribute('data-page') !== 'index') return;
         event.preventDefault();
         wheelBoost += (event.deltaY + event.deltaX) * wheelBoostFactor;
     }, { passive: false });
@@ -212,7 +213,12 @@ const initCarousel = () => {
     });
 };
 
-document.addEventListener('DOMContentLoaded', initCarousel);
+window.initCarousel = initCarousel;
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCarousel);
+} else {
+    initCarousel();
+}
 document.addEventListener('DOMContentLoaded', () => {
     // Анимируем секцию about
     if (typeof animateElements === 'function') {

@@ -43,6 +43,7 @@ const initNav = () => {
     });
 };
 
+window.initNav = initNav;
 document.addEventListener('DOMContentLoaded', () => {
     initNav();
     const footerYear = document.getElementById('footer-year');
