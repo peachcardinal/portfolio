@@ -150,10 +150,8 @@
                 } else {
                     isActive = href === 'index.html' || href === '/' || (href.startsWith('index') && !href.includes('works'));
                 }
-            } else if (dataPage === 'work') {
-                // Для страниц работ активна ссылка на works
-                isActive = href.includes('works');
             }
+            // На странице работы (dataPage === 'work') ссылку Works не помечаем активной — без зачёркивания
             
             if (isActive) {
                 link.classList.add('is-active');
@@ -165,6 +163,15 @@
     const reinitScripts = (dataPage) => {
         if (typeof window.initNav === 'function') {
             window.initNav();
+        }
+        // Скрываем превью картинки работ при переходе на любую страницу, кроме списка works
+        // (превью используется только на странице списка работ)
+        if (dataPage !== 'works') {
+            const previewEl = document.querySelector('.works__preview');
+            if (previewEl) {
+                previewEl.classList.remove('is-visible');
+                previewEl.innerHTML = '';
+            }
         }
         if (dataPage === 'work') {
             if (typeof window.initWorkPage === 'function') {
@@ -181,8 +188,43 @@
         } else if (dataPage === 'projects') {
             const gridEl = document.querySelector('.projects__grid');
             if (gridEl) gridEl.innerHTML = '';
+            // Если initProjectsGrid недоступна (скрипт не загружен), создаем функцию inline
             if (typeof window.initProjectsGrid === 'function') {
                 window.initProjectsGrid();
+            } else if (gridEl && Array.isArray(window.PROJECTS_GRID)) {
+                // Fallback: создаем карточки напрямую, если projects-grid.js не загружен
+                const data = window.PROJECTS_GRID;
+                data.forEach((project) => {
+                    const a = document.createElement('a');
+                    a.className = 'projects__card link' + (project.soon ? ' projects__card--soon' : '');
+                    a.href = project.link || '#';
+                    if (project.link && project.link !== '#' && (project.link.startsWith('http://') || project.link.startsWith('https://'))) {
+                        a.target = '_blank';
+                        a.rel = 'noopener';
+                    }
+                    const title = document.createElement('h2');
+                    title.className = 'projects__card-title h2';
+                    title.textContent = project.title || '';
+                    const role = document.createElement('span');
+                    role.className = 'projects__card-role';
+                    role.textContent = project.role || '';
+                    const description = document.createElement('p');
+                    description.className = 'projects__card-description';
+                    description.textContent = project.description || '';
+                    const footer = document.createElement('div');
+                    footer.className = 'projects__card-footer';
+                    footer.appendChild(description);
+                    a.appendChild(title);
+                    a.appendChild(role);
+                    a.appendChild(footer);
+                    gridEl.appendChild(a);
+                });
+                if (typeof animateElements === 'function') {
+                    const cards = Array.from(gridEl.querySelectorAll('.projects__card'));
+                    animateElements(cards, 50, true);
+                    const title = document.querySelector('.projects__title');
+                    if (title) animateElements([title], 0);
+                }
             }
         } else if (dataPage === 'index') {
             if (typeof window.initCarousel === 'function') {
@@ -227,8 +269,19 @@
                 return url;
             }
             
-            // Создаем абсолютный URL относительно текущего location
-            const baseUrl = new URL(window.location.href);
+            // Если путь начинается с /, он уже абсолютный относительно корня
+            if (url.startsWith('/')) {
+                return url;
+            }
+            
+            // Для относительных путей:
+            // - Если путь содержит точку (например, "about.html", "works.html") - разрешаем относительно корня сайта
+            //   (это файлы, которые должны быть в корне, а не относительно текущего пути)
+            // - Если путь без точки (например, "overlay" - slug для Prev/Next) - разрешаем относительно текущего пути
+            const containsDot = url.includes('.');
+            const baseUrl = containsDot 
+                ? new URL(window.location.origin)  // Относительно корня для файлов
+                : new URL(window.location.href);    // Относительно текущего пути для slug'ов
             const resolvedUrl = new URL(url, baseUrl);
             
             // Возвращаем pathname + search + hash
@@ -254,14 +307,14 @@
             }
             
             const main = document.querySelector('main');
-            // База пути для подпапки (например /portfolio при открытии с /portfolio/works)
-            const pathname = (window.location.pathname || '/').replace(/\/$/, '') || '/';
-            const pathBase = pathname === '/' ? '' : pathname.replace(/\/[^/]+$/, '');
-            // Для .../work/<slug> запрашиваем .../work/index.html?slug=..., т.к. статический сервер не отдаёт файл по /work/slug
-            const workMatch = normalizedPath.match(/\/work\/([^/]+)$/);
-            const fetchUrl = workMatch
-                ? (pathBase || '') + '/work/index.html?slug=' + encodeURIComponent(workMatch[1])
-                : normalizedUrl;
+            // Для .../works/<slug> запрашиваем шаблон work/index.html?slug=... (без новых сущностей на сервере)
+            const workMatch = normalizedPath.match(/\/works\/([^/]+)$/);
+            let fetchUrl = normalizedUrl;
+            if (workMatch) {
+                const slug = workMatch[1];
+                const pathBase = normalizedPath.replace(/\/works\/[^/]+$/, '');
+                fetchUrl = (pathBase ? pathBase + '/' : '/') + 'work/index.html?slug=' + encodeURIComponent(slug);
+            }
             
             const response = await fetch(fetchUrl, {
                 headers: {
@@ -306,10 +359,21 @@
                 }
             }
             
-            window.scrollTo(0, 0);
+            // Сброс прокрутки: сбрасываем все возможные значения прокрутки
+            const scrollToTop = () => {
+                window.scrollTo(0, 0);
+                if (document.documentElement.scrollTop !== 0) document.documentElement.scrollTop = 0;
+                if (document.body.scrollTop !== 0) document.body.scrollTop = 0;
+            };
+            scrollToTop();
             
             // Футер — после контента, в следующем тике, чтобы не трогать main
             setTimeout(() => {
+                // Для страницы работы дополнительно сбрасываем прокрутку после инициализации контента
+                // (на случай, если контент изменил высоту страницы и позицию скролла)
+                if (content.dataPage === 'work') {
+                    scrollToTop();
+                }
                 const existingFooter = document.querySelector('footer.footer') || document.querySelector('.footer');
                 if (content.footer) {
                     if (existingFooter) {

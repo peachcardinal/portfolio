@@ -1,7 +1,7 @@
 const initNav = () => {
     const path = window.location.pathname || '';
     let page = document.body.dataset.page;
-    if (path.match(/\/work\/[^/]+/)) {
+    if (path.match(/\/works\/[^/]+/)) {
         page = 'work';
     } else if (path.endsWith('/works') || path.includes('/works') || path.endsWith('works.html')) {
         page = 'works';
@@ -20,6 +20,11 @@ const initNav = () => {
 
     const navLinks = document.querySelectorAll('.header__nav a');
     const hash = window.location.hash;
+    
+    // Удаляем все активные классы перед установкой новых (исправление бага с зачеркиванием Works на странице работы)
+    navLinks.forEach((link) => {
+        link.classList.remove('is-active');
+    });
 
     navLinks.forEach((link) => {
         const href = link.getAttribute('href') || '';

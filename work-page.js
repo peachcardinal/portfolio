@@ -28,7 +28,7 @@ const createMediaEl = (src, type, alt) => {
 };
 
 const initWorkPage = () => {
-    const pathMatch = window.location.pathname.match(/\/work\/([^/]+)/);
+    const pathMatch = window.location.pathname.match(/\/works\/([^/]+)/);
     let slug = pathMatch ? pathMatch[1] : null;
     if (!slug) {
         slug = new URLSearchParams(window.location.search).get('slug');
@@ -293,10 +293,10 @@ const initWorkPage = () => {
         const next = workIndex < works.length - 1 ? works[workIndex + 1] : (works.length > 1 ? works[0] : null);
 
         const prevLink = prev && prev.slug
-            ? (pathMatch ? prev.slug : `work/${prev.slug}`)
+            ? (pathMatch ? prev.slug : `works/${prev.slug}`)
             : worksUrl;
         const nextLink = next
-            ? (next.slug ? (pathMatch ? next.slug : `work/${next.slug}`) : worksUrl)
+            ? (next.slug ? (pathMatch ? next.slug : `works/${next.slug}`) : worksUrl)
             : null;
 
         const prevBack = prev ? prev.title : 'Works';

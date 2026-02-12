@@ -102,21 +102,27 @@ body {
         180deg,
         rgb(27, 27, 29) 0vh,
         rgb(27, 27, 29) 65vh,
-        rgb(61, 63, 68) 100vh
+        rgb(61, 63, 68) 100vh,
+        rgb(61, 63, 68) 100%
     );
     /* perceptual gradient */
     background: linear-gradient(
         180deg,
         var(--bg) 0vh,
         var(--bg-mid) 65vh,
-        var(--bg-bottom) 100vh
+        var(--bg-bottom) 100vh,
+        var(--bg-bottom) 100%
     );
-    height: 100vh;
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height для iOS Safari */
     width: 100%;
     overflow-x: hidden;
     overflow-y: visible;
     display: flex;
     flex-direction: column;
+    background-attachment: fixed; /* Фиксируем градиент, чтобы он покрывал всю высоту страницы */
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 /* Fallback градиент для светлой темы (для браузеров без OKLCH) */
@@ -125,14 +131,16 @@ body {
         180deg,
         oklch(82% 0.012 255) 0vh,
         oklch(90% 0.008 95) 45vh,
-        oklch(99% 0.002 95) 100vh
+        oklch(99% 0.002 95) 100vh,
+        oklch(99% 0.002 95) 100%
     );
     /* perceptual gradient */
     background: linear-gradient(
         180deg,
         rgb(205, 210, 218) 0vh,
         rgb(230, 233, 238) 45vh,
-        rgb(255, 255, 255) 100vh
+        rgb(255, 255, 255) 100vh,
+        rgb(255, 255, 255) 100%
     );
 }
 
@@ -1588,6 +1596,7 @@ body.scale-layout .footer {
         grid-template-rows: auto auto;
         row-gap: 1rem;
         align-items: flex-end;
+        padding-bottom: calc(var(--page-padding) + env(safe-area-inset-bottom, 0px));
     }
 
     .footer__left {
