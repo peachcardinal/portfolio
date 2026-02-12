@@ -102,27 +102,22 @@ body {
         180deg,
         rgb(27, 27, 29) 0vh,
         rgb(27, 27, 29) 65vh,
-        rgb(61, 63, 68) 100vh,
-        rgb(61, 63, 68) 100%
+        rgb(61, 63, 68) 100vh
     );
     /* perceptual gradient */
     background: linear-gradient(
         180deg,
         var(--bg) 0vh,
         var(--bg-mid) 65vh,
-        var(--bg-bottom) 100vh,
-        var(--bg-bottom) 100%
+        var(--bg-bottom) 100vh
     );
-    min-height: 100vh;
+    height: 100vh;
     min-height: 100dvh; /* Dynamic viewport height для iOS Safari */
     width: 100%;
     overflow-x: hidden;
     overflow-y: visible;
     display: flex;
     flex-direction: column;
-    background-attachment: fixed; /* Фиксируем градиент, чтобы он покрывал всю высоту страницы */
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
 }
 
 /* Fallback градиент для светлой темы (для браузеров без OKLCH) */
@@ -131,16 +126,14 @@ body {
         180deg,
         oklch(82% 0.012 255) 0vh,
         oklch(90% 0.008 95) 45vh,
-        oklch(99% 0.002 95) 100vh,
-        oklch(99% 0.002 95) 100%
+        oklch(99% 0.002 95) 100vh
     );
     /* perceptual gradient */
     background: linear-gradient(
         180deg,
         rgb(205, 210, 218) 0vh,
         rgb(230, 233, 238) 45vh,
-        rgb(255, 255, 255) 100vh,
-        rgb(255, 255, 255) 100%
+        rgb(255, 255, 255) 100vh
     );
 }
 
@@ -1257,6 +1250,12 @@ body.scale-layout .footer {
 
 /* Адаптивность */
 @media (max-width: 768px) {
+    /* Фиксируем градиент к viewport на мобильных для iOS Safari */
+    body {
+        background-attachment: fixed;
+        background-size: 100% 100vh;
+    }
+
     .header {
         flex-wrap: wrap;
         gap: 1.5rem;
