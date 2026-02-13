@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Roman Sazonov, Work</title>
     <meta name="description" content="Roman Sazonov, Work">
     <meta name="robots" content="index, follow">
@@ -32,7 +32,16 @@
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body class="scale-layout" data-page="work">
+    <div class="viewport-scroll">
     <header class="header">
+        <div class="header__pb" aria-hidden="true">
+            <div class="header__pb-layer header__pb-layer--1"></div>
+            <div class="header__pb-layer header__pb-layer--2"></div>
+            <div class="header__pb-layer header__pb-layer--3"></div>
+            <div class="header__pb-layer header__pb-layer--4"></div>
+            <div class="header__pb-layer header__pb-layer--5"></div>
+            <div class="header__pb-layer header__pb-layer--6"></div>
+        </div>
         <div class="header__left">
             <a href="../index.html" class="header__name link link-flip" data-text="Roman Sazonov" aria-label="На главную">
                 <span class="link-flip__front">Roman Sazonov</span>
@@ -119,12 +128,15 @@
         </div>
     </footer>
 
+    <div class="works__preview" aria-hidden="true"></div>
+    </div>
     <script src="../work.js"></script>
     <script src="../work-data.js"></script>
     <script src="../nav.js"></script>
     <script src="../theme.js"></script>
     <script src="../animations.js"></script>
     <script src="../work-page.js"></script>
+    <script src="../script.js"></script>
     <script src="../router.js"></script>
 </body>
 </html>

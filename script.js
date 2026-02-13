@@ -168,6 +168,31 @@ const initCarousel = () => {
         wheelBoost += (event.deltaY + event.deltaX) * wheelBoostFactor;
     }, { passive: false });
 
+    let touchStartX = 0;
+    let touchStartY = 0;
+    const setupTouchCarousel = () => {
+        if (!viewport || !window.matchMedia('(max-width: 768px)').matches) return;
+        viewport.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            }
+        }, { passive: true });
+        viewport.addEventListener('touchmove', (e) => {
+            if (e.touches.length !== 1 || document.body.getAttribute('data-page') !== 'index') return;
+            const x = e.touches[0].clientX;
+            const y = e.touches[0].clientY;
+            const dx = x - touchStartX;
+            const dy = y - touchStartY;
+            touchStartX = x;
+            touchStartY = y;
+            virtualScroll -= dx;
+            normalizeScroll();
+            applyTransform();
+            if (Math.abs(dx) > Math.abs(dy)) e.preventDefault();
+        }, { passive: false });
+    };
+
     const logMobileLayout = () => {
         if (!window.matchMedia('(max-width: 768px)').matches) return;
         const main = document.querySelector('main');
@@ -191,6 +216,8 @@ const initCarousel = () => {
         applyTransform();
         if (!window.matchMedia('(max-width: 768px)').matches) {
             setupHover();
+        } else {
+            setupTouchCarousel();
         }
         lastTime = performance.now();
         requestAnimationFrame(animate);

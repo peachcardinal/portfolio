@@ -1054,7 +1054,7 @@ window.PROJECTS_GRID = [
     { title: '10byrs', role: 'Author', description: 'Notes on design, leadership, and building a life in creative work', icon: 'assets/logo.png', link: 'https://t.me/tenbyrs', soon: false },
     { title: 'Design Support', role: 'Mentor', description: 'Mentorship for designers ready to grow, make stronger decisions, and move forward with clarity', icon: 'assets/logo.png', link: 'https://10byrs.notion.site/42cb1ce3c0cb43bc88b895b9fae17795', soon: false },
     { title: 'Articles', role: 'Author', description: 'Notes on design, ambition, and building a meaningful creative life', icon: 'assets/logo.png', link: 'https://dsgners.ru/10byrs', soon: false },
-    { title: 'Books', role: 'In progress', description: 'Books I read for perspective, imagination, and the quiet shaping of taste', icon: 'assets/logo.png', link: 'books.html', soon: false },
+    { title: 'Books', role: 'In progress', description: 'Books I read for perspective, imagination, and the quiet shaping of taste', icon: 'assets/logo.png', link: '/books', soon: false },
     { title: 'Games', role: 'Soon', description: 'Games that inspire my sense of story, atmosphere, and interactive experience', icon: 'assets/logo.png', link: '#', soon: true },
 ];
 

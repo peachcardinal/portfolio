@@ -314,6 +314,14 @@
                 const slug = workMatch[1];
                 const pathBase = normalizedPath.replace(/\/works\/[^/]+$/, '');
                 fetchUrl = (pathBase ? pathBase + '/' : '/') + 'work/index.html?slug=' + encodeURIComponent(slug);
+            } else if (!normalizedPath.includes('.')) {
+                // Пути без .html (/books, /works, /about, /projects) — запрашиваем соответствующий .html файл
+                const segment = normalizedPath.replace(/^\/|\/$/g, '') || 'index';
+                if (segment === 'index') {
+                    fetchUrl = '/index.html';
+                } else {
+                    fetchUrl = '/' + segment + '.html';
+                }
             }
             
             const response = await fetch(fetchUrl, {
@@ -359,11 +367,13 @@
                 }
             }
             
-            // Сброс прокрутки: сбрасываем все возможные значения прокрутки
+            // Сброс прокрутки: окно и на мобиле — контейнер .viewport-scroll
             const scrollToTop = () => {
                 window.scrollTo(0, 0);
                 if (document.documentElement.scrollTop !== 0) document.documentElement.scrollTop = 0;
                 if (document.body.scrollTop !== 0) document.body.scrollTop = 0;
+                const scrollEl = document.querySelector('.viewport-scroll');
+                if (scrollEl && scrollEl.scrollTop !== 0) scrollEl.scrollTop = 0;
             };
             scrollToTop();
             
@@ -435,5 +445,25 @@
     } else {
         initRouter();
     }
+
+    // #region agent log
+    function logLayout() {
+        var footer = document.querySelector('.footer');
+        var scrollEl = document.querySelector('.viewport-scroll');
+        var main = document.querySelector('main');
+        var getPos = function(el) {
+            if (!el) return null;
+            var s = window.getComputedStyle(el);
+            var r = el.getBoundingClientRect();
+            return { position: s.position, top: r.top, left: r.left, height: r.height, width: r.width, parent: el.parentElement && el.parentElement.className };
+        };
+        fetch('http://127.0.0.1:7242/ingest/00680b59-54e9-4962-bb41-b1cc2a630e6c', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'router.js:logLayout', message: 'layout', data: { footer: getPos(footer), viewportScroll: scrollEl ? { rect: scrollEl.getBoundingClientRect(), scrollHeight: scrollEl.scrollHeight, scrollTop: scrollEl.scrollTop, display: window.getComputedStyle(scrollEl).display } : null, main: main ? { rect: main.getBoundingClientRect(), offsetHeight: main.offsetHeight, flexGrow: window.getComputedStyle(main).flexGrow } : null, innerWidth: window.innerWidth }, timestamp: Date.now(), hypothesisId: 'H1' }) }).catch(function() {});
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() { setTimeout(logLayout, 100); });
+    } else {
+        setTimeout(logLayout, 100);
+    }
+    // #endregion
 
 })();

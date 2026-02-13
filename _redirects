@@ -1,2 +1,3 @@
 /work.html?slug=:slug  /work/:slug  301
 /work/*  /work/index.html  200
+/books  /books.html  200

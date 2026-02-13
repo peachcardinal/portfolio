@@ -39,6 +39,11 @@ html {
     --radius-far: 0.5rem;
     --selection-bg: rgb(224, 255, 11);
     --selection-text: var(--dark);
+    /* Progressive blur header (как на vshslv.com: панели с убывающим blur + маски-полосы) */
+    --pb-height: 120px;
+    --pb-blur: 3rem;
+    --pb-ratio: 1.9;
+    --pb-tint: rgba(29, 28, 31, 0.4);
 }
 
 /* Theme variables */
@@ -112,12 +117,19 @@ body {
         var(--bg-bottom) 100vh
     );
     height: 100vh;
-    min-height: 100dvh; /* Dynamic viewport height для iOS Safari */
     width: 100%;
     overflow-x: hidden;
     overflow-y: visible;
     display: flex;
     flex-direction: column;
+}
+
+/* Обёртка контента: на десктопе участвует в flex, на мобиле — скролл-контейнер */
+.viewport-scroll {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 
 /* Fallback градиент для светлой темы (для браузеров без OKLCH) */
@@ -220,6 +232,98 @@ a {
     padding: var(--page-padding);
 }
 
+/* Progressive blur: как на vshslv.com — N панелей с убывающим blur и масками-полосами для плавного перехода */
+.header__pb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--pb-height);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Только blur, без фона — как на рефе vshslv.com, цвета нет */
+.header__pb-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Слой 1: самый сильный blur, маска сверху с мягким затуханием */
+.header__pb-layer--1 {
+    -webkit-backdrop-filter: blur(var(--pb-blur));
+    backdrop-filter: blur(var(--pb-blur));
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 12%, transparent 40%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 12%, transparent 40%);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
+
+/* Слой 2–6: blur / ratio^i, маски с длинными переходами чтобы не было полос */
+.header__pb-layer--2 {
+    -webkit-backdrop-filter: blur(calc(var(--pb-blur) / var(--pb-ratio)));
+    backdrop-filter: blur(calc(var(--pb-blur) / var(--pb-ratio)));
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 8% 28%, transparent 48%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 8% 28%, transparent 48%);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
+
+.header__pb-layer--3 {
+    -webkit-backdrop-filter: blur(calc(var(--pb-blur) / (var(--pb-ratio) * var(--pb-ratio))));
+    backdrop-filter: blur(calc(var(--pb-blur) / (var(--pb-ratio) * var(--pb-ratio))));
+    -webkit-mask-image: linear-gradient(to bottom, transparent 15%, #000 25% 40%, transparent 58%);
+    mask-image: linear-gradient(to bottom, transparent 15%, #000 25% 40%, transparent 58%);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
+
+.header__pb-layer--4 {
+    -webkit-backdrop-filter: blur(calc(var(--pb-blur) / (var(--pb-ratio) * var(--pb-ratio) * var(--pb-ratio))));
+    backdrop-filter: blur(calc(var(--pb-blur) / (var(--pb-ratio) * var(--pb-ratio) * var(--pb-ratio))));
+    -webkit-mask-image: linear-gradient(to bottom, transparent 28%, #000 38% 52%, transparent 68%);
+    mask-image: linear-gradient(to bottom, transparent 28%, #000 38% 52%, transparent 68%);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
+
+.header__pb-layer--5 {
+    -webkit-backdrop-filter: blur(calc(var(--pb-blur) / (var(--pb-ratio) * var(--pb-ratio) * var(--pb-ratio) * var(--pb-ratio))));
+    backdrop-filter: blur(calc(var(--pb-blur) / (var(--pb-ratio) * var(--pb-ratio) * var(--pb-ratio) * var(--pb-ratio))));
+    -webkit-mask-image: linear-gradient(to bottom, transparent 40%, #000 50% 62%, transparent 78%);
+    mask-image: linear-gradient(to bottom, transparent 40%, #000 50% 62%, transparent 78%);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
+
+.header__pb-layer--6 {
+    -webkit-backdrop-filter: blur(calc(var(--pb-blur) / (var(--pb-ratio) * var(--pb-ratio) * var(--pb-ratio) * var(--pb-ratio) * var(--pb-ratio))));
+    backdrop-filter: blur(calc(var(--pb-blur) / (var(--pb-ratio) * var(--pb-ratio) * var(--pb-ratio) * var(--pb-ratio) * var(--pb-ratio))));
+    -webkit-mask-image: linear-gradient(to bottom, transparent 50%, #000 58% 70%, transparent 88%);
+    mask-image: linear-gradient(to bottom, transparent 50%, #000 58% 70%, transparent 88%);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+    .header__pb {
+        background: linear-gradient(to bottom, var(--pb-tint) 0%, transparent 100%);
+    }
+    .header__pb-layer {
+        display: none;
+    }
+}
+
+.header__left,
+.header__center,
+.header__right {
+    position: relative;
+    z-index: 1;
+}
+
 .header__left {
     display: flex;
     flex-direction: column;
@@ -234,8 +338,8 @@ a {
 
 .header__nav {
     position: absolute;
-    top: var(--page-padding);
-    left: var(--nav-left);
+    top: 0;
+    left: calc(var(--nav-left) - var(--page-padding));
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
@@ -1250,13 +1354,73 @@ body.scale-layout .footer {
 
 /* Адаптивность */
 @media (max-width: 768px) {
-    /* Фиксируем градиент к viewport на мобильных для iOS Safari */
+    /* Фон и высота: документ должен расти по контенту, скролл на корне — тогда Safari сворачивает UI */
+    html {
+        height: auto;
+        min-height: 100%;
+        background-color: var(--bg);
+        overflow-x: hidden;
+        overflow-y: visible;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    html::-webkit-scrollbar {
+        display: none;
+    }
+    /* Projects: низ как вверху — один тёмный цвет для Safari tint и фона */
+    html.page-projects {
+        background-color: var(--bg);
+    }
+    /* Скролл в .viewport-scroll: контейнер обрывается над safe-area, без полосы — контент использует всю высоту до границы, снизу только градиент. */
     body {
-        background-attachment: fixed;
-        background-size: 100% 100vh;
+        position: relative;
+        height: 100dvh;
+        overflow: hidden;
+        background: transparent;
+    }
+    .viewport-scroll {
+        display: flex;
+        flex-direction: column;
+        flex: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: env(safe-area-inset-bottom, 0px);
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        padding-top: calc(env(safe-area-inset-top, 0px) + var(--header-offset));
+        padding-bottom: 0;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .viewport-scroll::-webkit-scrollbar {
+        display: none;
+    }
+    /* Градиент на весь экран: от верха до низа с заходом в safe-area (как в рабочем варианте) */
+    body::before {
+        content: '';
+        position: fixed;
+        top: calc(-1 * env(safe-area-inset-top, 0px));
+        left: 0;
+        right: 0;
+        bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
+        z-index: -1;
+        background: linear-gradient(
+            180deg,
+            var(--bg) 0vh,
+            var(--bg-mid) 65vh,
+            var(--bg-bottom) 100dvh
+        );
+        -webkit-backface-visibility: hidden;
     }
 
     .header {
+        position: fixed;
+        top: env(safe-area-inset-top, 0px);
+        left: 0;
+        right: 0;
         flex-wrap: wrap;
         gap: 1.5rem;
         padding: var(--page-padding);
@@ -1287,8 +1451,9 @@ body.scale-layout .footer {
         flex: 1;
     }
 
+    /* Блок Works/Projects/About: left: 0 чтобы совпадать с левым краем контента хедера (padding уже у .header) */
     .header__nav {
-        left: var(--page-padding);
+        left: 0;
     }
 
     .header__right {
@@ -1299,7 +1464,11 @@ body.scale-layout .footer {
     }
 
     main {
-        padding: var(--header-offset) var(--page-padding) var(--page-padding);
+        flex: 1;
+        min-height: 0;
+        padding: var(--page-padding);
+        padding-bottom: calc(var(--page-padding) + env(safe-area-inset-bottom, 0px));
+        /* визуально под шапкой: отступ сверху даёт padding-top у .viewport-scroll; flex заполняет до футера */
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -1588,14 +1757,19 @@ body.scale-layout .footer {
         padding-left: 1rem;
     }
 
-    /* Footer — mobile */
+    /* Footer — mobile: отступ сверху как на десктопе */
     .footer {
+        margin-top: 320px;
         display: grid;
         grid-template-columns: 1fr auto;
         grid-template-rows: auto auto;
         row-gap: 1rem;
         align-items: flex-end;
         padding-bottom: calc(var(--page-padding) + env(safe-area-inset-bottom, 0px));
+    }
+    /* Только на Works: футер прижат к низу вьюпорта при коротком списке */
+    body[data-page="works"] .footer {
+        margin-top: auto;
     }
 
     .footer__left {

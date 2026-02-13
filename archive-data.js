@@ -9,6 +9,18 @@ window.ARCHIVE = [
   },
   {
     "type": "image",
+    "src": "assets/archive/11Frame 152.webp"
+  },
+  {
+    "type": "image",
+    "src": "assets/archive/Frame 152.webp"
+  },
+  {
+    "type": "image",
+    "src": "assets/archive/Group 61.webp"
+  },
+  {
+    "type": "image",
     "src": "assets/archive/IMG_0244.webp"
   },
   {
@@ -62,6 +74,14 @@ window.ARCHIVE = [
   {
     "type": "video",
     "src": "assets/archive/portfolio__zip_v1 (720p).mp4"
+  },
+  {
+    "type": "image",
+    "src": "assets/archive/post02-02.webp"
+  },
+  {
+    "type": "image",
+    "src": "assets/archive/post04-06.webp"
   },
   {
     "type": "image",
