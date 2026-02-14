@@ -132,7 +132,7 @@ body {
     min-height: 0;
 }
 
-/* Fallback градиент для светлой темы (для браузеров без OKLCH) */
+/* Fallback градиент для светлой темы (для браузеров без OKLCH). fixed — чтобы на мобиле не скроллился отдельно от контента. */
 [data-theme="light"] body {
     background: linear-gradient(
         180deg,
@@ -147,6 +147,7 @@ body {
         rgb(230, 233, 238) 45vh,
         rgb(255, 255, 255) 100vh
     );
+    background-attachment: fixed;
 }
 
 a {
@@ -493,12 +494,12 @@ h2, .h2 {
     font-size: 1.15rem;
 }
 
-/* Main — заполняет экран, текст about прибит к низу */
+/* Main — по умолчанию не растягивается, футер скроллится вместе с контентом */
 main {
-    flex: 1;
+    flex: none;
     display: flex;
     flex-direction: column;
-    min-height: 0;
+    min-height: auto;
     overflow: visible;
     max-width: 960px;
     width: 100%;
@@ -506,13 +507,10 @@ main {
     padding: var(--header-offset) var(--page-padding) var(--page-padding);
 }
 
-body[data-page="works"] main,
-body[data-page="about"] main,
-body[data-page="projects"] main,
-body[data-page="books"] main,
-body[data-page="work"] main {
-    flex: none;
-    min-height: auto;
+/* Только на главной: main заполняет экран, карусель по центру, текст about прибит к низу */
+body[data-page="index"] main {
+    flex: 1;
+    min-height: 0;
 }
 
 /* Carousel */
@@ -1354,7 +1352,7 @@ body.scale-layout .footer {
 
 /* Адаптивность */
 @media (max-width: 768px) {
-    /* Фон и высота: документ должен расти по контенту, скролл на корне — тогда Safari сворачивает UI */
+    /* Скролл внутри .viewport-scroll: контент не вылетает снизу, градиент фиксирован сзади. */
     html {
         height: auto;
         min-height: 100%;
@@ -1367,11 +1365,9 @@ body.scale-layout .footer {
     html::-webkit-scrollbar {
         display: none;
     }
-    /* Projects: низ как вверху — один тёмный цвет для Safari tint и фона */
     html.page-projects {
         background-color: var(--bg);
     }
-    /* Скролл в .viewport-scroll: контейнер обрывается над safe-area, без полосы — контент использует всю высоту до границы, снизу только градиент. */
     body {
         position: relative;
         height: 100dvh;
@@ -1398,7 +1394,7 @@ body.scale-layout .footer {
     .viewport-scroll::-webkit-scrollbar {
         display: none;
     }
-    /* Градиент на весь экран: от верха до низа с заходом в safe-area (как в рабочем варианте) */
+    /* Градиент фиксирован сзади на всю высоту экрана, не скроллится. */
     body::before {
         content: '';
         position: fixed;
@@ -1407,13 +1403,14 @@ body.scale-layout .footer {
         right: 0;
         bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
         z-index: -1;
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
         background: linear-gradient(
             180deg,
             var(--bg) 0vh,
             var(--bg-mid) 65vh,
             var(--bg-bottom) 100dvh
         );
-        -webkit-backface-visibility: hidden;
     }
 
     .header {
@@ -1474,6 +1471,16 @@ body.scale-layout .footer {
         justify-content: center;
     }
 
+    /* На страницах с футером main не растягивается — футер идёт сразу под контентом, а не внизу экрана */
+    body[data-page="works"] main,
+    body[data-page="about"] main,
+    body[data-page="projects"] main,
+    body[data-page="books"] main,
+    body[data-page="work"] main {
+        flex: none;
+        min-height: auto;
+    }
+
     .carousel {
         flex: 1;
         display: flex;
@@ -1494,18 +1501,24 @@ body.scale-layout .footer {
 
     .carousel__track .card__title {
         opacity: 1;
-        max-height: 3em;
+        max-height: none;
+        min-height: 3em;
         margin-top: 10px;
         font-size: 14px;
-        line-height: 14px;
+        line-height: 1.2;
         transform: translateY(0) scale(1);
+        overflow: visible;
     }
 
-    h1, .h1,
+    h1, .h1 {
+        font-size: 2rem;
+        line-height: 2.333rem;
+    }
+
     .about-page__intro,
     .about-page__section-title {
-        font-size: 2.333rem;
-        line-height: 2.667rem;
+        font-size: 2rem;
+        line-height: 2.333rem;
     }
 
     /* Works page — mobile */
@@ -1530,6 +1543,22 @@ body.scale-layout .footer {
         column-gap: 12px;
         align-items: baseline;
         width: 100%;
+    }
+
+    /* Без флипа и превью на мобиле — один тап открывает страницу работы */
+    .works__row .link-flip:hover .link-flip__front {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+    .works__row .link-flip:hover .link-flip__back {
+        opacity: 0;
+        transform: translateY(-50%) rotateX(90deg);
+    }
+    .works:hover .works__row:not(:hover) {
+        opacity: 1;
+    }
+    .works__preview {
+        display: none !important;
     }
 
     .works__work-title {
@@ -1564,8 +1593,8 @@ body.scale-layout .footer {
     }
 
     .projects__card-title {
-        font-size: 2.333rem;
-        line-height: 2.667rem;
+        font-size: 2rem;
+        line-height: 2.333rem;
     }
 
     .projects__grid {
@@ -1608,6 +1637,11 @@ body.scale-layout .footer {
     .work__header {
         padding-left: 0;
         text-align: center;
+    }
+
+    .work__title {
+        font-size: 2rem;
+        line-height: 2.333rem;
     }
 
     .work__block--half {
@@ -1681,8 +1715,8 @@ body.scale-layout .footer {
 
     .work__nav-prev,
     .work__nav-next {
-        font-size: 2.333rem;
-        line-height: 2.667rem;
+        font-size: 2rem;
+        line-height: 2.333rem;
     }
 
     /* About page — mobile */
@@ -1757,7 +1791,7 @@ body.scale-layout .footer {
         padding-left: 1rem;
     }
 
-    /* Footer — mobile: отступ сверху как на десктопе */
+    /* Footer — mobile: как на десктопе, просто после контента */
     .footer {
         margin-top: 320px;
         display: grid;
@@ -1766,10 +1800,6 @@ body.scale-layout .footer {
         row-gap: 1rem;
         align-items: flex-end;
         padding-bottom: calc(var(--page-padding) + env(safe-area-inset-bottom, 0px));
-    }
-    /* Только на Works: футер прижат к низу вьюпорта при коротком списке */
-    body[data-page="works"] .footer {
-        margin-top: auto;
     }
 
     .footer__left {
@@ -1819,9 +1849,9 @@ body.scale-layout .footer {
     }
 }
 
-/* Theme toggle button (hidden from visitors, auto theme by time remains) */
+/* Theme toggle button (временно включён в шапке) */
 .theme-toggle {
-    display: none;
+    display: inline-flex;
     background: none;
     border: none;
     padding: 0;

@@ -389,11 +389,21 @@
                     if (existingFooter) {
                         existingFooter.outerHTML = content.footer;
                     } else {
-                        const firstScript = document.body.querySelector('script');
-                        if (firstScript) {
-                            firstScript.insertAdjacentHTML('beforebegin', content.footer);
+                        const scrollEl = document.querySelector('.viewport-scroll');
+                        const previewEl = scrollEl && scrollEl.querySelector('.works__preview');
+                        if (scrollEl) {
+                            if (previewEl) {
+                                previewEl.insertAdjacentHTML('beforebegin', content.footer);
+                            } else {
+                                scrollEl.insertAdjacentHTML('beforeend', content.footer);
+                            }
                         } else {
-                            document.body.insertAdjacentHTML('beforeend', content.footer);
+                            const firstScript = document.body.querySelector('script');
+                            if (firstScript) {
+                                firstScript.insertAdjacentHTML('beforebegin', content.footer);
+                            } else {
+                                document.body.insertAdjacentHTML('beforeend', content.footer);
+                            }
                         }
                     }
                     const footerYear = document.getElementById('footer-year');

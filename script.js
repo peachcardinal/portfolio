@@ -165,7 +165,7 @@ const initCarousel = () => {
     window.addEventListener('wheel', (event) => {
         if (document.body.getAttribute('data-page') !== 'index') return;
         event.preventDefault();
-        wheelBoost += (event.deltaY + event.deltaX) * wheelBoostFactor;
+        wheelBoost += event.deltaX * wheelBoostFactor;
     }, { passive: false });
 
     let touchStartX = 0;
