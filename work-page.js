@@ -163,6 +163,15 @@ const initWorkPage = () => {
         }
     }
 
+    let isFirstMedia = true;
+    const appendCriticalMedia = (el) => {
+        if (isFirstMedia) {
+            el.setAttribute('data-preload', 'critical');
+            isFirstMedia = false;
+        }
+        return el;
+    };
+
     blocks.forEach((b) => {
         const wrap = document.createElement('div');
         wrap.className = `work__block work__block--${b.type}`;
@@ -170,7 +179,7 @@ const initWorkPage = () => {
         if (b.type === 'full') {
             const src = `${folder}/${b.file}`;
             const type = getMediaType(b.file);
-            wrap.appendChild(createMediaEl(src, type, work.title));
+            wrap.appendChild(appendCriticalMedia(createMediaEl(src, type, work.title)));
         } else if (b.type === 'half') {
             const emptyCell = document.createElement('div');
             emptyCell.className = 'work__block-cell work__block-cell--empty';
@@ -178,7 +187,7 @@ const initWorkPage = () => {
             mediaCell.className = 'work__block-cell';
             const src = `${folder}/${b.file}`;
             const type = getMediaType(b.file);
-            mediaCell.appendChild(createMediaEl(src, type, work.title));
+            mediaCell.appendChild(appendCriticalMedia(createMediaEl(src, type, work.title)));
             wrap.appendChild(emptyCell);
             wrap.appendChild(mediaCell);
         } else if (b.type === 'two') {
@@ -188,10 +197,10 @@ const initWorkPage = () => {
             const rightType = getMediaType(b.right);
             const leftEl = document.createElement('div');
             leftEl.className = 'work__block-cell';
-            leftEl.appendChild(createMediaEl(leftSrc, leftType, work.title));
+            leftEl.appendChild(appendCriticalMedia(createMediaEl(leftSrc, leftType, work.title)));
             const rightEl = document.createElement('div');
             rightEl.className = 'work__block-cell';
-            rightEl.appendChild(createMediaEl(rightSrc, rightType, work.title));
+            rightEl.appendChild(appendCriticalMedia(createMediaEl(rightSrc, rightType, work.title)));
             wrap.appendChild(leftEl);
             wrap.appendChild(rightEl);
         } else if (b.type === 'text-media') {
@@ -201,7 +210,7 @@ const initWorkPage = () => {
             mediaEl.className = 'work__block-cell';
             const src = `${folder}/${b.file}`;
             const type = getMediaType(b.file);
-            mediaEl.appendChild(createMediaEl(src, type, work.title));
+            mediaEl.appendChild(appendCriticalMedia(createMediaEl(src, type, work.title)));
             if (hasText) {
                 const textEl = document.createElement('div');
                 textEl.className = 'work__block-cell work__block-text';

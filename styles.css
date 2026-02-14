@@ -318,6 +318,106 @@ a {
     }
 }
 
+/* Page loader — фон под шапкой (z-index ниже .header), шапка поверх лоадера */
+.page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
+}
+.page-loader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+    .page-loader,
+    .page-loader.is-hidden {
+        transition: none;
+    }
+}
+.page-loader__bg {
+    position: absolute;
+    inset: 0;
+    background: rgb(224, 255, 11);
+    z-index: -1;
+}
+.page-loader__header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: calc(var(--pb-height) + var(--page-padding));
+    min-height: 5rem;
+}
+.page-loader__center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.page-loader__text {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-family: 'Basis Grotesque Mono Pro', monospace;
+    font-size: 1.15rem;
+    line-height: 1;
+    color: rgb(29, 28, 31);
+}
+.page-loader__char {
+    display: inline-block;
+    animation: page-loader-blur 2s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 0.15s);
+}
+@media (prefers-reduced-motion: reduce) {
+    .page-loader__char {
+        animation: none;
+        opacity: 1;
+        filter: none;
+    }
+}
+@keyframes page-loader-blur {
+    0%, 100% {
+        opacity: 0;
+        filter: blur(10px);
+    }
+    50% {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+@media (max-width: 768px) {
+    .page-loader__header {
+        display: none;
+    }
+    /* Убираем полосу фона лоадера под Safari: при скрытии сдвигаем оверлей вверх */
+    .page-loader.is-hidden {
+        transform: translateY(-100%);
+    }
+}
+
+/* Lazy media reveal — плавное появление после загрузки */
+.media-reveal {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.media-reveal.is-ready {
+    opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+    .media-reveal,
+    .media-reveal.is-ready {
+        transition: none;
+    }
+}
+
 .header__left,
 .header__center,
 .header__right {
@@ -1849,9 +1949,9 @@ body.scale-layout .footer {
     }
 }
 
-/* Theme toggle button (временно включён в шапке) */
+/* Theme toggle button (hidden from visitors) */
 .theme-toggle {
-    display: inline-flex;
+    display: none;
     background: none;
     border: none;
     padding: 0;

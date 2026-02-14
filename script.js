@@ -10,8 +10,9 @@ const initCarousel = () => {
         const data = Array.isArray(window.WORKS) ? window.WORKS : [];
         track.innerHTML = '';
 
-        data.forEach((work) => {
+        data.forEach((work, workIndex) => {
             const li = document.createElement('li');
+            const isFirst = workIndex === 0;
 
             const card = document.createElement('a');
             card.className = 'card';
@@ -36,12 +37,14 @@ const initCarousel = () => {
                 video.setAttribute('muted', '');
                 video.playsInline = true;
                 video.setAttribute('aria-label', work.media.alt || work.title || 'Work video');
+                if (isFirst) video.setAttribute('data-preload', 'critical');
                 media.appendChild(video);
             } else if (work.media && work.media.type === 'image' && work.media.src) {
                 const img = document.createElement('img');
                 img.src = work.media.src;
                 img.alt = work.media.alt || work.title || '';
-                img.loading = 'lazy';
+                img.loading = isFirst ? 'eager' : 'lazy';
+                if (isFirst) img.setAttribute('data-preload', 'critical');
                 media.appendChild(img);
             } else {
                 media.classList.add('card__media--text');
@@ -165,7 +168,8 @@ const initCarousel = () => {
     window.addEventListener('wheel', (event) => {
         if (document.body.getAttribute('data-page') !== 'index') return;
         event.preventDefault();
-        wheelBoost += event.deltaX * wheelBoostFactor;
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        wheelBoost += (event.deltaX + (isMobile ? 0 : event.deltaY)) * wheelBoostFactor;
     }, { passive: false });
 
     let touchStartX = 0;

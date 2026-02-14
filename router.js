@@ -2,7 +2,9 @@
     'use strict';
 
     const FADE_DURATION = 300;
+    const LOADER_SHOW_DELAY_MS = 150;
     let isNavigating = false;
+    let showLoaderTimeout = null;
 
     // Проверка, должна ли ссылка обрабатываться через SPA
     const shouldIntercept = (link) => {
@@ -296,12 +298,19 @@
         if (isNavigating) return;
         try {
             isNavigating = true;
+            if (showLoaderTimeout) clearTimeout(showLoaderTimeout);
+            showLoaderTimeout = setTimeout(() => {
+                showLoaderTimeout = null;
+                if (typeof window.showPageLoader === 'function') window.showPageLoader();
+            }, LOADER_SHOW_DELAY_MS);
             const normalizedUrl = normalizeUrl(url);
             
             // Проверяем, не переходим ли мы на ту же страницу (без учета hash для обычных переходов)
             const currentPath = window.location.pathname + window.location.search;
             const normalizedPath = normalizedUrl.split('#')[0];
             if (normalizedPath === currentPath && pushState && !normalizedUrl.includes('#')) {
+                clearTimeout(showLoaderTimeout);
+                showLoaderTimeout = null;
                 isNavigating = false;
                 return;
             }
@@ -379,6 +388,9 @@
             
             // Футер — после контента, в следующем тике, чтобы не трогать main
             setTimeout(() => {
+                clearTimeout(showLoaderTimeout);
+                showLoaderTimeout = null;
+                if (typeof window.hidePageLoaderWhenReady === 'function') window.hidePageLoaderWhenReady();
                 // Для страницы работы дополнительно сбрасываем прокрутку после инициализации контента
                 // (на случай, если контент изменил высоту страницы и позицию скролла)
                 if (content.dataPage === 'work') {
@@ -415,6 +427,9 @@
             
         } catch (error) {
             console.error('Navigation error:', error);
+            clearTimeout(showLoaderTimeout);
+            showLoaderTimeout = null;
+            if (typeof window.hidePageLoader === 'function') window.hidePageLoader();
             // Fallback на обычную навигацию
             window.location.href = url;
         } finally {

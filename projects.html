@@ -32,6 +32,13 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="scale-layout" data-page="projects">
+    <div id="page-loader" class="page-loader" role="status" aria-live="polite" aria-busy="true">
+        <div class="page-loader__bg" aria-hidden="true"></div>
+        <div class="page-loader__header" aria-hidden="true"></div>
+        <div class="page-loader__center">
+            <span class="page-loader__text">Loading</span>
+        </div>
+    </div>
     <div class="viewport-scroll">
     <header class="header">
         <div class="header__pb" aria-hidden="true">
@@ -69,7 +76,7 @@
         <div class="header__center">
             <a href="index.html" class="header__logo" aria-label="На главную">
                 <span class="header__logo-media">
-                    <img src="assets/logo.gif" alt="">
+                    <img src="assets/logo.gif" alt="" data-preload="critical">
                 </span>
             </a>
         </div>
@@ -132,6 +139,7 @@
     <script src="theme.js"></script>
     <script src="animations.js"></script>
     <script src="projects-grid.js"></script>
+    <script src="page-loader.js"></script>
     <script src="router.js"></script>
 </body>
 </html>
