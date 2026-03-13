@@ -1413,6 +1413,240 @@ body[data-page="about"] main.about-page {
     margin-bottom: 1rem;
 }
 
+/* Mentoring page */
+body[data-page="mentoring"] main.mentoring-page {
+    padding: var(--header-offset) var(--page-padding) var(--page-padding);
+}
+
+.mentoring-page {
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.mentoring-page__title {
+    padding-left: calc(var(--nav-left) - var(--page-padding));
+    margin-top: 8.333rem;
+    margin-bottom: 0;
+    font-size: 2.667rem;
+    line-height: 3rem;
+    font-weight: 400;
+    font-family: 'Literata', Georgia, serif;
+    color: var(--text);
+}
+
+.mentoring-page__section {
+    margin-top: 8.333rem;
+}
+
+.mentoring-page__section-title {
+    padding-left: calc(var(--nav-left) - var(--page-padding));
+    margin-bottom: 2rem;
+    font-size: 2.667rem;
+    line-height: 3rem;
+    font-weight: 400;
+    font-family: 'Literata', Georgia, serif;
+    color: var(--text);
+}
+
+.mentoring-page__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    color: var(--text);
+}
+
+.mentoring-page__list li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.mentoring-page__list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+}
+
+.mentoring-page__list--topics li {
+    margin-bottom: 1rem;
+}
+
+.mentoring-page__list--topics li::before {
+    content: none;
+}
+
+.mentoring-page__list--topics li strong {
+    font-family: 'Basis Grotesque Mono Pro', monospace;
+    font-weight: 400;
+}
+
+.mentoring-page__intro {
+    margin-top: 4rem;
+}
+
+.mentoring-page__intro p {
+    font-size: 2rem;
+    line-height: 2.5rem;
+    font-family: 'Literata', Georgia, serif;
+    color: var(--text);
+}
+
+.mentoring-page__formats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.mentoring-page__format {
+    padding: 2rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-far);
+    background: var(--card);
+}
+
+.mentoring-page__format-title {
+    font-size: 1.5rem;
+    font-family: 'Basis Grotesque Mono Pro', monospace;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.mentoring-page__format p {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.mentoring-page__format-price {
+    font-family: 'Basis Grotesque Mono Pro', monospace;
+    font-size: 1.15rem;
+    color: var(--muted);
+}
+
+.mentoring-page__cta {
+    display: inline-block;
+    padding: 1rem 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-far);
+    font-family: 'Basis Grotesque Mono Pro', monospace;
+    font-size: 1.15rem;
+    color: var(--text);
+}
+
+.mentoring-page__cta-note {
+    font-size: 1.3rem;
+    color: var(--muted);
+    max-width: 32rem;
+}
+
+.mentoring-page__reviews {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.mentoring-page__review {
+    display: flex;
+    flex-direction: column;
+    padding: 1.2rem 1.35rem 1.35rem 1.35rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: transparent;
+    margin: 0;
+}
+
+.mentoring-page__review p {
+    font-size: 1.3rem;
+    line-height: 1.5;
+    margin: 0 0 1rem 0;
+    color: var(--text);
+}
+
+.mentoring-page__review p:last-of-type {
+    margin-bottom: 0;
+}
+
+.mentoring-page__review cite {
+    margin-top: auto;
+    padding-top: 2rem;
+    font-style: normal;
+    font-family: 'Basis Grotesque Mono Pro', monospace;
+    font-size: 1.3rem;
+    color: var(--muted);
+}
+
+.mentoring-page__bio p {
+    font-size: 2.667rem;
+    line-height: 3rem;
+    font-weight: 400;
+    font-family: 'Literata', Georgia, serif;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+}
+
+.mentoring-page__bio a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.mentoring-page__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    margin-top: 2rem;
+    font-size: 1.15rem;
+    color: var(--text);
+}
+
+.mentoring-page__links a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+@media (max-width: 768px) {
+    body[data-page="mentoring"] main.mentoring-page {
+        padding: calc(var(--header-offset) * 0.6) var(--page-padding) var(--page-padding);
+    }
+
+    .mentoring-page__title {
+        padding-left: 0;
+        font-size: 2rem;
+    }
+
+    .mentoring-page__section-title {
+        padding-left: 0;
+        font-size: 2rem;
+    }
+
+    .mentoring-page__formats {
+        grid-template-columns: 1fr;
+    }
+
+    .mentoring-page__reviews {
+        grid-template-columns: 1fr;
+    }
+
+    .mentoring-page__intro p {
+        font-size: 1.5rem;
+    }
+
+    .mentoring-page__bio p {
+        font-size: 2rem;
+        line-height: 2.5rem;
+    }
+
+    .mentoring-page__list {
+        font-size: 1.25rem;
+    }
+}
+
 .about-page__cv-btn {
     display: inline-block;
     width: fit-content;

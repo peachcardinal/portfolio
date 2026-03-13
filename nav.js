@@ -3,16 +3,18 @@ const initNav = () => {
     let page = document.body.dataset.page;
     if (path.match(/\/works\/[^/]+/)) {
         page = 'work';
-    } else if (path.endsWith('/works') || path.includes('/works') || path.endsWith('works.html')) {
+    } else if (path.endsWith('/works') || path.includes('/works')) {
         page = 'works';
-    } else if (path.endsWith('/books') || path.includes('/books') || path.endsWith('books.html')) {
+    } else if (path.endsWith('/books') || path.includes('/books')) {
         page = 'books';
-    } else if (path.endsWith('/projects') || path.includes('/projects') || path.endsWith('projects.html')) {
+    } else if (path.endsWith('/projects') || path.includes('/projects')) {
         page = 'projects';
-    } else if (path.endsWith('/about') || path.includes('/about') || path.endsWith('about.html')) {
+    } else if (path.endsWith('/about') || path.includes('/about')) {
         page = 'about';
+    } else if (path.endsWith('/mentoring') || path.includes('/mentoring')) {
+        page = 'mentoring';
     } else if (!page) {
-        if (path.endsWith('/') || path.endsWith('index.html') || path === '' || path === '/') {
+        if (path.endsWith('/') || path === '' || path === '/') {
             page = 'index';
         }
     }
@@ -36,11 +38,13 @@ const initNav = () => {
             isActive = href.includes('projects');
         } else if (page === 'about') {
             isActive = href.includes('about');
+        } else if (page === 'mentoring') {
+            isActive = href.includes('mentoring');
         } else if (page === 'index') {
             if (hash === '#about') {
                 isActive = href.includes('#about');
             } else {
-                isActive = href === 'index.html' || href === '/' || (href.startsWith('index') && !href.includes('works'));
+                isActive = href === '/' || (href.endsWith('/') && href.length <= 2);
             }
         }
 

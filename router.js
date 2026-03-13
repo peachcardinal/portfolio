@@ -146,11 +146,13 @@
                 isActive = href.includes('projects');
             } else if (dataPage === 'about') {
                 isActive = href.includes('about');
+            } else if (dataPage === 'mentoring') {
+                isActive = href.includes('mentoring');
             } else if (dataPage === 'index') {
                 if (window.location.hash === '#about') {
                     isActive = href.includes('#about');
                 } else {
-                    isActive = href === 'index.html' || href === '/' || (href.startsWith('index') && !href.includes('works'));
+                    isActive = href === '/' || (href.endsWith('/') && href.length <= 2);
                 }
             }
             // На странице работы (dataPage === 'work') ссылку Works не помечаем активной — без зачёркивания
@@ -277,7 +279,7 @@
             }
             
             // Для относительных путей:
-            // - Если путь содержит точку (например, "about.html", "works.html") - разрешаем относительно корня сайта
+            // - Если путь содержит точку (например, для slug'ов с расширением) - разрешаем относительно корня сайта
             //   (это файлы, которые должны быть в корне, а не относительно текущего пути)
             // - Если путь без точки (например, "overlay" - slug для Prev/Next) - разрешаем относительно текущего пути
             const containsDot = url.includes('.');
