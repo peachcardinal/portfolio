@@ -70,10 +70,10 @@ const initWorks = () => {
         worksEl.appendChild(renderRow(work));
     });
 
-    // Анимируем строки работ
+    // Без IntersectionObserver — строки должны появиться сразу после SPA-навигации
     if (typeof animateElements === 'function') {
         const rows = Array.from(worksEl.querySelectorAll('.works__row'));
-        animateElements(rows, 50, true);
+        animateElements(rows, 50, false);
     }
 
     initArchive();
@@ -139,7 +139,8 @@ const initArchive = () => {
 
 window.initWorks = initWorks;
 const runWorksInit = () => {
-    if (!document.querySelector('.works__grid')) return;
+    if (document.body.getAttribute('data-page') !== 'works') return;
+    if (!document.querySelector('.works')) return;
     initWorks();
     if (typeof animateElements === 'function') {
         const title = document.querySelector('.works__title');

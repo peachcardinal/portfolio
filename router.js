@@ -189,6 +189,10 @@
             if (typeof window.initWorks === 'function') {
                 window.initWorks();
             }
+            if (typeof animateElements === 'function') {
+                const title = document.querySelector('.works__title');
+                if (title) animateElements([title], 0, false);
+            }
         } else if (dataPage === 'projects') {
             const gridEl = document.querySelector('.projects__grid');
             if (gridEl) gridEl.innerHTML = '';
@@ -315,7 +319,13 @@
                 clearTimeout(showLoaderTimeout);
                 showLoaderTimeout = null;
                 isNavigating = false;
-                return;
+                const page = document.body.getAttribute('data-page');
+                const worksNeedsReload = (normalizedPath === '/works' || normalizedPath === '/works/')
+                    && !document.querySelector('.works__row');
+                if (!worksNeedsReload) {
+                    if (page) reinitScripts(page);
+                    return;
+                }
             }
             
             const main = document.querySelector('main');
