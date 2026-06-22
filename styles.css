@@ -1184,6 +1184,32 @@ body[data-page="index"] main {
     margin-bottom: 0;
 }
 
+.work__intro-text ul {
+    list-style: none;
+    margin: 0 0 0.7rem 0;
+    padding: 0;
+}
+
+.work__intro-text ul:last-child {
+    margin-bottom: 0;
+}
+
+.work__intro-text li {
+    position: relative;
+    padding-left: 1.2em;
+    margin-bottom: 0.35rem;
+}
+
+.work__intro-text li:last-child {
+    margin-bottom: 0;
+}
+
+.work__intro-text li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+}
+
 .work__intro-btn-wrap {
     margin-top: 2rem;
 }

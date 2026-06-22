@@ -105,10 +105,11 @@ const initWorkPage = () => {
         }
     }
 
-    const assetBase = pathMatch ? '../' : '';
-    const folder = assetBase + (work.folder || `assets/works/${slug}`);
+    const folder = '/' + (work.folder || `assets/works/${slug}`).replace(/^\//, '');
     const workFiles = (window.WORK_FILES && window.WORK_FILES[slug]) || [];
     const layout = work.layout || null;
+
+    const buildMediaSrc = (file) => `${folder}/${encodeURIComponent(file)}`;
 
     const contentEl = document.querySelector('.work__content');
     if (!contentEl) return;
@@ -177,7 +178,7 @@ const initWorkPage = () => {
         wrap.className = `work__block work__block--${b.type}`;
 
         if (b.type === 'full') {
-            const src = `${folder}/${b.file}`;
+            const src = buildMediaSrc(b.file);
             const type = getMediaType(b.file);
             wrap.appendChild(appendCriticalMedia(createMediaEl(src, type, work.title)));
         } else if (b.type === 'half') {
@@ -185,14 +186,14 @@ const initWorkPage = () => {
             emptyCell.className = 'work__block-cell work__block-cell--empty';
             const mediaCell = document.createElement('div');
             mediaCell.className = 'work__block-cell';
-            const src = `${folder}/${b.file}`;
+            const src = buildMediaSrc(b.file);
             const type = getMediaType(b.file);
             mediaCell.appendChild(appendCriticalMedia(createMediaEl(src, type, work.title)));
             wrap.appendChild(emptyCell);
             wrap.appendChild(mediaCell);
         } else if (b.type === 'two') {
-            const leftSrc = `${folder}/${b.left}`;
-            const rightSrc = `${folder}/${b.right}`;
+            const leftSrc = buildMediaSrc(b.left);
+            const rightSrc = buildMediaSrc(b.right);
             const leftType = getMediaType(b.left);
             const rightType = getMediaType(b.right);
             const leftEl = document.createElement('div');
@@ -208,7 +209,7 @@ const initWorkPage = () => {
             if (!hasText) wrap.classList.add('work__block--no-text');
             const mediaEl = document.createElement('div');
             mediaEl.className = 'work__block-cell';
-            const src = `${folder}/${b.file}`;
+            const src = buildMediaSrc(b.file);
             const type = getMediaType(b.file);
             mediaEl.appendChild(appendCriticalMedia(createMediaEl(src, type, work.title)));
             if (hasText) {

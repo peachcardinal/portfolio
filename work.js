@@ -168,6 +168,95 @@ window.WORKS = [
         ]
     },
     {
+        title: 'Rocket Work',
+        slug: 'rocketwork',
+        folder: 'assets/works/rocketwork',
+        link: 'works/rocketwork',
+        projectLink: 'https://b2b.rocketwork.ru/smz/',
+        projectLinkLabel: 'View live',
+        year: '2023',
+        type: 'Product',
+        media: { type: 'video', src: 'assets/works/index-rocketwork.mp4', alt: 'Rocket Work' },
+        intro: {
+            heading: 'Rocket Work is a launchpad for contractors: to work, sign, and get paid, faster than ever',
+            text: '<p>The task was to scale the product in light of the following changes:</p><ul><li>Rocket Work has grown and is no longer just a service for freelancers; it is now a full-fledged ecosystem that addresses the employment segment for both clients and contractors.</li><li>There is a need for new features.</li><li>The service relaunch became necessary as the product grew and its market positioning evolved. The new solution focuses on audience segmentation and JTBD-driven product decisions, with updated typography, illustrations, and a refreshed product image.</li></ul><p><strong>Impact</strong></p><ul><li>Onboarding shortened by 3 minutes while keeping all required compliance steps</li><li>Trial access before signup increased registration conversion by ~25%</li><li>Restructured navigation into 6 core sections reduced time to key actions by 30%</li></ul>',
+            meta: {
+                left: [
+                    { label: 'Role', value: 'Art Direction, Product design' },
+                    { label: 'Year', value: '2023' },
+                    { label: 'Company', value: 'Rocket Humans' },
+                    { label: 'Team', value: 'Maxim Karibov, Viktoriya Surkova' }
+                ],
+                right: []
+            }
+        },
+        layout: [
+            { type: 'full', file: '00-main-video.mp4' },
+            {
+                type: 'intro',
+                heading: 'Rocket Work is a launchpad for contractors: to work, sign, and get paid, faster than ever',
+                text: '<p>The task was to scale the product in light of the following changes:</p><ul><li>Rocket Work has grown and is no longer just a service for freelancers; it is now a full-fledged ecosystem that addresses the employment segment for both clients and contractors.</li><li>There is a need for new features.</li><li>The service relaunch became necessary as the product grew and its market positioning evolved. The new solution focuses on audience segmentation and JTBD-driven product decisions, with updated typography, illustrations, and a refreshed product image.</li></ul><p><strong>Impact</strong></p><ul><li>Onboarding shortened by 3 minutes while keeping all required compliance steps</li><li>Trial access before signup increased registration conversion by ~25%</li><li>Restructured navigation into 6 core sections reduced time to key actions by 30%</li></ul>',
+                meta: {
+                    left: [
+                        { label: 'Role', value: 'Art Direction, Product design' },
+                        { label: 'Year', value: '2023' },
+                        { label: 'Company', value: 'Rocket Humans' },
+                        { label: 'Team', value: 'Maxim Karibov, Viktoriya Surkova' }
+                    ],
+                    right: []
+                }
+            },
+            { type: 'full', file: '01-wibe-1.webp' },
+            { type: 'two', left: '02-brand graphic.png', right: '03-brand font.webp' },
+            {
+                type: 'text',
+                text: '<p>As Rocket Work grew beyond a freelancer tool into a full employment ecosystem, a service relaunch became the right response — not a visual refresh alone, but a rethink of what the product offers and who it serves.</p><p>The relaunched experience is built around audience segmentation and JTBD: understanding who uses the platform, what they need in each situation, and which features matter most. We refined the typography, introduced a system of illustrations, and sharpened the overall image to match the platform\'s new ambition.</p>'
+            },
+            { type: 'two', left: '04-wibe illustration.mp4', right: '05-wibe-2.webp' },
+            { type: 'full', file: '06-segments.webp' },
+            { type: 'full', file: '07-jbtd.webp' },
+            {
+                type: 'text',
+                text: '<p>The relaunch needed a shared language between research, design, and product — not another round of abstract personas. Segmentation gave us three real contractor types with different income models and pain points. JTBD connected those pains to specific product decisions: what to build first, what could wait, and what each new section had to solve.</p><p>This framework became the backbone of the service relaunch. Feature prioritization and the structure of the app grew out of the same map — so every screen could be traced back to a real job someone is trying to get done.</p>'
+            },
+            { type: 'full', file: '08-before after.webp' },
+            {
+                type: 'text',
+                text: '<p><strong>Focused on real work conditions</strong></p><p>We switched to a light theme — contractors mostly use the app during daytime, outdoors. The new palette improves visibility in bright light and feels more natural in their daily workflow.</p><p><strong>Bigger and clearer interface</strong></p><p>Text, buttons, and key actions were scaled up to fit real usage context — on the move, with one hand, and on smaller devices. The redesigned layout ensures speed and comfort, even in a hurry.</p><p><strong>Adding emotion to function</strong></p><p>We introduced more color, energy, and visual rhythm to the interface. The product now feels more alive and positive — matching the fast, human side of everyday work.</p>'
+            },
+            { type: 'full', file: '09-ui kit.webp' },
+            { type: 'text-media', text: '<p>The app revolves around three states of the performer: working, searching, and receiving.</p><p><strong>My Deals</strong> is the main screen and workspace. The active deals feed shows statuses, tasks, and deadlines — everything currently in progress. This is where the performer logs in every day.</p><p><strong>The Marketplace</strong> is the search point: a feed of new services and job openings, opened when deals are completed and it\'s time to find the next one.</p><p><strong>The Wallet</strong> is the support system. It consolidates money, payments, and taxes in one place, so paperwork doesn\'t pull focus from the work itself.</p>', file: '10-menu.webp' },
+            { type: 'half', file: '11-deal-statuses.png' },
+            { type: 'text-media', text: '<p>Deals is the core of the product. Users see an active feed of tasks, deadlines, and status updates in one stream.</p><p>From here they can open a deal, review details, and move work forward without jumping between screens.</p>', file: '12-лента-сделка.mp4' },
+            { type: 'two', left: '13-deal header.webp', right: '14-deal parts.webp' },
+            { type: 'text-media', text: '<p>Tasks change over the course of a deal, so we added a clear flow for editing assignments. The user always sees what changed, who requested it, and what happens after confirmation.</p><p>This reduces friction when scope shifts and keeps both sides aligned on the current state of work.</p>', file: '15-изменить задание.mp4' },
+            { type: 'two', left: '16-images gif.mp4', right: '17-icon-set.webp' },
+            { type: 'full', file: '18-marketplace feed.webp' },
+            {
+                type: 'text',
+                text: '<p>The Marketplace is a second stream inside the app — a place for performers to pick up extra work when their main deals slow down or they have free time between shifts.</p><p>It surfaces deals from other clients outside the performer\'s current pipeline, so finding a side gig doesn\'t mean leaving the platform or starting a new search from scratch.</p>'
+            },
+            { type: 'two', left: '19-принять вакансию.mp4', right: '20-marketplace filters.webp' },
+            { type: 'full', file: '21-wibe finance.webp' },
+            {
+                type: 'text',
+                text: '<p>The Wallet brings everything financial into one place — so performers can see where they stand without switching apps or digging through receipts.</p><p><strong>Income</strong> shows what has already landed: completed deals, payouts, and transaction history. It answers the most common question — "how much did I actually earn?" — and gives a clear record for personal planning.</p><p><strong>Active deals</strong> tracks money still in progress. Performers see what\'s coming from ongoing work, not just what\'s already paid out. That visibility helps plan the week ahead and avoid gaps between shifts.</p><p><strong>Taxes</strong> keeps obligations visible and manageable inside the same flow. Instead of treating paperwork as a separate chore, the performer can stay on top of taxes without losing focus on the work itself.</p>'
+            },
+            { type: 'two', left: '22-finance parts.webp', right: '23-dohod header.webp' },
+            { type: 'full', file: '24-taxes.webp' },
+            { type: 'two', left: '25-pforile main.webp', right: '26-profile wibe.webp' },
+            { type: 'full', file: '27-profile parts.webp' },
+            { type: 'full', file: '28-signup shot.webp' },
+            { type: 'text-media', text: '<p>Registration in a platform like this means a lot of data entry — legal status, documents, verification steps. We stripped out everything that wasn\'t essential and kept the flow as short as the compliance requirements would allow.</p><p>The full scenario is long and branches heavily depending on the performer\'s status: self-employed, entrepreneur, company representative, and more. The case shows key entry points rather than every path — the complete flow would need a separate walkthrough.</p>', file: '29-full flow.webp' },
+            { type: 'full', file: '30-signup flow.webp' },
+            { type: 'two', left: '31-signup shot-1.webp', right: '32-signup complete.webp' },
+            { type: 'full', file: '33-signup docs photo.webp' },
+            { type: 'full', file: '34-chat main.webp' },
+            { type: 'two', left: '35-chat attach.webp', right: '36-chat detalis.webp' },
+            { type: 'full', file: '37-wip.webp' },
+        ]
+    },
+    {
         title: 'BlaBlaTalk',
         slug: 'blablatalk',
         folder: 'assets/works/blablatalk',
