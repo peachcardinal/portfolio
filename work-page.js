@@ -33,7 +33,7 @@ const initWorkPage = () => {
     if (!slug) {
         slug = new URLSearchParams(window.location.search).get('slug');
     }
-    const worksUrl = pathMatch ? '../works.html' : 'works.html';
+    const worksUrl = '/works';
     if (!slug) {
         window.location.href = worksUrl;
         return;
@@ -113,6 +113,10 @@ const initWorkPage = () => {
 
     const contentEl = document.querySelector('.work__content');
     if (!contentEl) return;
+
+    contentEl.innerHTML = '';
+    const navResetEl = document.querySelector('.work__nav');
+    if (navResetEl) navResetEl.innerHTML = '';
 
     let autoIndex = 0;
     const consumeNext = () => {
@@ -302,12 +306,8 @@ const initWorkPage = () => {
         const prev = workIndex > 0 ? works[workIndex - 1] : (works.length > 1 ? works[works.length - 1] : null);
         const next = workIndex < works.length - 1 ? works[workIndex + 1] : (works.length > 1 ? works[0] : null);
 
-        const prevLink = prev && prev.slug
-            ? (pathMatch ? prev.slug : `works/${prev.slug}`)
-            : worksUrl;
-        const nextLink = next
-            ? (next.slug ? (pathMatch ? next.slug : `works/${next.slug}`) : worksUrl)
-            : null;
+        const prevLink = prev && prev.slug ? `/works/${prev.slug}` : worksUrl;
+        const nextLink = next && next.slug ? `/works/${next.slug}` : null;
 
         const prevBack = prev ? prev.title : 'Works';
         const nextBack = next ? next.title : '';
