@@ -321,7 +321,8 @@
                 isNavigating = false;
                 const page = document.body.getAttribute('data-page');
                 const worksNeedsReload = (normalizedPath === '/works' || normalizedPath === '/works/')
-                    && !document.querySelector('.works__row');
+                    && !document.querySelector('.works__row')
+                    && !document.querySelector('.works__card');
                 if (!worksNeedsReload) {
                     if (page) reinitScripts(page);
                     return;

@@ -104,8 +104,14 @@
     </header>
 
     <main>
-        <h1 class="works__title">Works</h1>
-        <h1 class="works" aria-label="Works list"></h1>
+        <div class="works__header">
+            <h1 class="works__title">Works</h1>
+            <div class="works__view-toggle" role="group" aria-label="Works view">
+                <button type="button" class="works__view-btn is-active" data-view="list" aria-pressed="true">List</button>
+                <button type="button" class="works__view-btn" data-view="grid" aria-pressed="false">Grid</button>
+            </div>
+        </div>
+        <div class="works works--list" data-view="list" aria-label="Works list"></div>
         <div class="works__archive" aria-label="Archive"></div>
     </main>
 
