@@ -39,6 +39,11 @@ const initWorkPage = () => {
         return;
     }
 
+    if (/\/work\/index\.html$/i.test(window.location.pathname)) {
+        const cleanUrl = '/works/' + slug;
+        window.history.replaceState({ url: cleanUrl }, '', cleanUrl);
+    }
+
     const works = Array.isArray(window.WORKS) ? window.WORKS : [];
     const workIndex = works.findIndex((w) => w.slug === slug);
     const work = workIndex >= 0 ? works[workIndex] : null;

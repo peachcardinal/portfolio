@@ -95,7 +95,14 @@
         }, { once: true });
     }
 
+    function shouldBootstrapRoute() {
+        const path = window.location.pathname;
+        if (path.includes('/work/index.html')) return false;
+        return path !== '/' && path !== '/index.html';
+    }
+
     function runOnDOMReady() {
+        if (shouldBootstrapRoute()) return;
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(hidePageLoaderWhenReady, 0);

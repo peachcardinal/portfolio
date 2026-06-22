@@ -245,9 +245,15 @@ const initCarousel = () => {
 };
 
 window.initCarousel = initCarousel;
+const isHomePath = () => {
+    const path = window.location.pathname;
+    return path === '/' || path === '/index.html';
+};
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCarousel);
-} else {
+    document.addEventListener('DOMContentLoaded', () => {
+        if (isHomePath()) initCarousel();
+    });
+} else if (isHomePath()) {
     initCarousel();
 }
 document.addEventListener('DOMContentLoaded', () => {

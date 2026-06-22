@@ -298,6 +298,7 @@
 
     const navigate = async (url, pushState = true) => {
         if (isNavigating) return;
+        let normalizedUrl = url;
         try {
             isNavigating = true;
             if (showLoaderTimeout) clearTimeout(showLoaderTimeout);
@@ -305,7 +306,7 @@
                 showLoaderTimeout = null;
                 if (typeof window.showPageLoader === 'function') window.showPageLoader();
             }, LOADER_SHOW_DELAY_MS);
-            const normalizedUrl = normalizeUrl(url);
+            normalizedUrl = normalizeUrl(url);
             
             // Проверяем, не переходим ли мы на ту же страницу (без учета hash для обычных переходов)
             const currentPath = window.location.pathname + window.location.search;
@@ -462,8 +463,17 @@
             navigate(url, false);
         });
         
-        // Перехват динамически созданных ссылок (делегирование событий)
-        // Это уже обрабатывается через document.addEventListener('click')
+        // Прямой заход / refresh на /works/slug, /about и т.д. — Timeweb отдаёт index.html без rewrite
+        const bootstrapCurrentRoute = () => {
+            const path = window.location.pathname;
+            if (path.includes('/work/index.html')) return;
+            const isHome = path === '/' || path === '/index.html';
+            if (!isHome) {
+                if (typeof window.showPageLoader === 'function') window.showPageLoader();
+                navigate(path + window.location.search + window.location.hash, false);
+            }
+        };
+        bootstrapCurrentRoute();
     };
 
     // Инициализация при загрузке DOM

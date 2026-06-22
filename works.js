@@ -139,6 +139,7 @@ const initArchive = () => {
 
 window.initWorks = initWorks;
 const runWorksInit = () => {
+    if (!document.querySelector('.works__grid')) return;
     initWorks();
     if (typeof animateElements === 'function') {
         const title = document.querySelector('.works__title');
